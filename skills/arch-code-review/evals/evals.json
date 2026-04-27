@@ -1,0 +1,65 @@
+{
+  "skill_name": "arch-code-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review the current branch against main and decide whether it can be merged. Use the default English output. Do not judge only by whether tests pass; first identify this change's minimum closed loop.",
+      "expected_output": "An English merge-decision review that infers the minimum closed loop, reads project docs, reports merge gate status, uses deduction scoring, avoids Markdown tables, and does not include a generic praise section.",
+      "files": [],
+      "expectations": [
+        "The report states the inferred minimum closed loop before formal issues.",
+        "The report includes a merge gate decision that is not based on score alone.",
+        "The report uses the seven required sections and no Markdown tables.",
+        "The report excludes the test dimension when tests are not in scope and explains the excluded weight."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Run an architecture-audit-level PR review. Focus on whether this diff violates boundaries defined in docs/ARCHITECTURE.md, and do not list style nits.",
+      "expected_output": "An architecture-audit review that treats documentation as authoritative, focuses on principal contradictions around architecture boundaries, and reports doc/code conflicts separately.",
+      "files": [],
+      "expectations": [
+        "The review searches for and applies relevant architecture documentation before judging code.",
+        "Documentation/code conflicts are treated as implementation deviations unless explicitly marked as suspected stale docs.",
+        "Formal issues include code or validation facts, closed-loop impact, repair direction, and deduction.",
+        "Style-only issues are omitted unless tied to systemic risk."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "This is a large branch that may include UI, scheduler, and test-tool changes. Please code review whether it can be merged.",
+      "expected_output": "A stop-rule response if multiple unrelated minimum closed loops cannot be narrowed to one, listing candidate loops and asking the user to choose the primary loop instead of reviewing everything at once.",
+      "files": [],
+      "expectations": [
+        "The skill stops formal review when multiple unrelated loops are present and no primary loop is specified.",
+        "The response lists candidate minimum closed loops.",
+        "The response asks for the missing decision rather than producing a forced score.",
+        "The response does not invent formal issues without sufficient facts."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Review this PR. The related typecheck fails in one changed package, but the failure appears outside the current minimum closed loop. Decide whether that blocks merge.",
+      "expected_output": "An English review that grades validation failure by its impact on the inferred minimum closed loop instead of mechanically treating every validation failure as a blocker.",
+      "files": [],
+      "expectations": [
+        "The output is in English by default.",
+        "The review treats validation output as evidence and classifies the failure by closed-loop impact.",
+        "The review does not automatically mark every validation failure as blocker.",
+        "The merge gate explanation still accounts for validation facts."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Take a look at this function and help me fix the obvious problems.",
+      "expected_output": "A near-miss trigger case: the arch-code-review skill should not be used for ordinary implementation/debugging/casual code inspection unless the context is clearly pre-merge review.",
+      "files": [],
+      "expectations": [
+        "The arch-code-review skill should not trigger for this prompt by description alone.",
+        "The prompt is treated as ordinary coding or debugging help, not a merge-decision review.",
+        "No seven-section merge review report is produced.",
+        "No deduction scoring or merge gate is invented."
+      ]
+    }
+  ]
+}
