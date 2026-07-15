@@ -1,0 +1,52 @@
+[
+  {
+    "query": "Review the current branch against main and decide whether it can be merged. Use the default English output. Do not judge only by whether tests pass; first identify this change's minimum closed loop.",
+    "should_trigger": true,
+    "source": "derived from evals.json #1"
+  },
+  {
+    "query": "Run an architecture-audit-level PR review. Focus on whether this diff violates boundaries defined in docs/ARCHITECTURE.md, and do not list style nits.",
+    "should_trigger": true,
+    "source": "derived from evals.json #2"
+  },
+  {
+    "query": "This is a large branch that may include UI, scheduler, and test-tool changes. Please code review whether it can be merged.",
+    "should_trigger": true,
+    "source": "derived from evals.json #3"
+  },
+  {
+    "query": "Review this PR. The related typecheck fails in one changed package, but the failure appears outside the current minimum closed loop. Decide whether that blocks merge.",
+    "should_trigger": true,
+    "source": "derived from evals.json #4"
+  },
+  {
+    "query": "Can we merge this branch into main yet?",
+    "should_trigger": true,
+    "source": "extra positive variant"
+  },
+  {
+    "query": "Take a look at this function and help me fix the obvious problems.",
+    "should_trigger": false,
+    "source": "derived from evals.json #5 (near-miss)"
+  },
+  {
+    "query": "Refactor this module to reduce duplication.",
+    "should_trigger": false,
+    "source": "extra near-miss: refactoring (explicitly excluded)"
+  },
+  {
+    "query": "Debug why this endpoint returns 500.",
+    "should_trigger": false,
+    "source": "extra near-miss: debugging (explicitly excluded)"
+  },
+  {
+    "query": "Explain what auth.ts does.",
+    "should_trigger": false,
+    "source": "extra near-miss: casual code reading (explicitly excluded)"
+  },
+  {
+    "query": "Write a new notification service for our app.",
+    "should_trigger": false,
+    "source": "extra near-miss: ordinary implementation (explicitly excluded)"
+  }
+]
