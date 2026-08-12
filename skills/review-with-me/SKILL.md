@@ -1,13 +1,15 @@
 ---
 name: review-with-me
-description: Prepare a low-noise code review for human judgment.
+description: Curate the code worth a human's attention and present it in reviewable slices.
 disable-model-invocation: true
 argument-hint: "<review scope: commits, revset, branch, bookmark, or natural language>"
 ---
 
 # /review-with-me
 
-Prepare a **human review brief**. The agent owns what code and tools can determine; the human judges intent, taste, local knowledge, trade-offs, and responsibility. This skill records those judgments—it does not issue a merge verdict.
+Prepare a **human code review**, not another agent findings report. The agent investigates the full change, then puts the load-bearing code in front of the human with enough context to judge it without navigating the repository.
+
+This skill records human judgments; it does not issue a merge verdict.
 
 ## Scope
 
@@ -24,30 +26,60 @@ Version 1 reviews a contiguous range, including the working copy when requested.
 
 The range limits what is judged, not where evidence may come from. Read relevant existing code, tests, documentation, callers, and commit descriptions, while reporting only matters introduced, exposed, or changed by the range.
 
-## Division of judgment
+## Build review slices
 
-Before involving the human, understand the changed behavior and gather enough evidence to resolve questions the agent can answer. A candidate enters the human **frontier** only when all three are true:
+Understand every material behavior and boundary in the range. Select the **load-bearing code** where a human's independent reading has value, especially:
 
-1. Its answer depends on intent, taste, local knowledge, or responsibility that the code cannot reliably reveal.
-2. Different answers materially change behavior, risk, or maintenance cost.
-3. The answer changes implementation, acceptance, or release.
+- domain policy and user-visible behavior
+- control flow, failure handling, and irreversible effects
+- ownership, lifecycle, and trust boundaries
+- public contracts and abstractions that shape future changes
+- surprising implementation choices or assumptions
+- consequential issues found by the agent
 
-Uncertainty alone is not admission. Search, test, and reason first. Keep definite defects and mechanical work agent-owned; fix them when already authorized, then rerun relevant checks and review the resulting net effect. Otherwise surface only blockers and work needing authorization.
+Present each selection as one of three review slices:
 
-Fold low-sensitivity material such as mechanical changes, local declarations, data-shape details, and test scaffolding once it has no remaining decision relevance. Keep the fold reversible and summarize it by category and count.
+- **Verify** — the agent thinks it is sound; the human independently checks the critical implementation.
+- **Problem** — the agent found a consequential issue; the human sees the claim beside its evidence.
+- **Decision** — correctness depends on intent, taste, local knowledge, trade-offs, or responsibility.
+
+Fold mechanical edits, repetition, generated code, and local declarations that carry no behavior or boundary. A declaration or data shape that defines a contract is load-bearing, not mechanical. Any range containing a non-mechanical change must produce at least one slice. Zero slices is allowed only when the entire range is mechanical, and the response must explain why.
+
+## Make each slice self-contained
+
+Use this compact shape, adapting labels when useful:
+
+````markdown
+### [Verify | Problem | Decision] <what this code controls>
+
+<one or two sentences establishing the mental model>
+
+```<language>
+<enough exact code to understand the relevant behavior>
+// REVIEW ①: <annotation attached to the consequential line or branch>
+```
+
+**Review:** <the concrete thing for the human to check or decide>
+**Agent take:** <answer> — <single most important reason>
+Source: `<path:start-end>`
+````
+
+Quote the code directly in the response. Add `REVIEW` annotations only to the quoted copy, never to project files. Preserve enough surrounding control flow, inputs, and outcomes to make the question answerable; use multiple small excerpts when one excerpt would hide a cross-file contract. A source location supports the slice—it never substitutes for showing the code.
+
+Expose uncertainty plainly. Say when no reliable agent take exists. Include a major consequence or unknown only when it changes the judgment.
 
 ## Meet the human where they are
 
-Adapt each explanation to whether the human already knows the concern and is familiar with the area:
+Adapt the slice explanation to whether the human knows the concern and is familiar with the area:
 
 - unknown + unfamiliar → teach the smallest useful mental model
 - unknown + familiar → point out the deviation or omission
-- known + unfamiliar → help with implementation evidence and trade-offs
-- known + familiar → complete the agent-owned work and summarize it
+- known + unfamiliar → explain implementation evidence and trade-offs
+- known + familiar → show the critical code with minimal commentary
 
-Start with the shortest useful explanation and adjust from natural cues such as “familiar”, “explain”, “I know the intent but not the implementation”, or “handle it”. Teaching covers the problem, how this design works, and the present trade-off—enough to make the current decision. Treat irreversible, high-impact, or insufficiently verifiable choices as human decisions regardless of familiarity.
+Infer this from natural cues such as “familiar”, “explain”, “I know the intent but not the implementation”, or “handle it”; start short and expand on request. Teaching covers the problem, how this code works, and the present trade-off—enough to review the slice rather than start a general lesson.
 
-## Human review brief
+## Run the human review
 
 Begin with a short orientation organized by behavior:
 
@@ -56,36 +88,26 @@ Begin with a short orientation organized by behavior:
 - assumptions the code cannot confirm
 - what the agent checked
 
-Then present the current frontier, ordered by consequence, at most five decisions per round:
+Order slices by consequence and present at most five per round. Accept natural responses: looks right, concern confirmed, choose differently, explain more, inspect more context, or defer. Recompute the remaining review after each round.
 
-```markdown
-### <decision>
+Integrate consequential agent findings into **Problem** slices instead of placing them in a separate findings dump. Summarize only these outside slices:
 
-Suggestion: <answer> — <single most important reason>
-Inspect: <1–3 necessary code, test, or documentation anchors>
-```
+- mechanical issues already fixed and verified
+- authorization status and required action; any consequential problem itself still appears in a Problem slice
+- repeated instances represented by one slice
+- folded material, by reason and count
 
-Say when no reliable suggestion exists. Add a major consequence or unknown only when it changes the decision. Explain what each anchor establishes; inline only the smallest code fragment required to decide.
-
-Accept natural responses: agree, choose differently, inspect evidence, or defer. Recompute the frontier after each round. Use Plannotator only when the human asks to inspect code and it can show exactly the normalized range; state the limitation when it cannot.
-
-Keep these sections distinct:
-
-- **Human decisions** — frontier items awaiting or recording judgment
-- **Agent-owned findings** — blockers and authorization needs, each with status, evidence anchor, impact, and required action; plus final counts
-- **Folded** — omitted material summarized by reason and count, available on request
-
-If no candidate passes the gate, say: **“This range contains no issue worth transferring to human judgment.”** Still show the normalized scope, agent-owned findings, and folded summary.
+Use Plannotator only when the human asks for broader visual inspection and it can show exactly the normalized range; state the limitation when it cannot.
 
 ## Closure
 
-Maintain a concise decision record in the conversation:
+Maintain a concise record of reviewed slices:
 
-- confirmed decisions
-- changes the agent should make
-- accepted or deferred risks
-- open decisions and exactly what they block
+- accepted implementations
+- confirmed problems and required changes
+- human decisions
+- accepted or deferred risks, including what they block
 
-A deferred decision is a blocker only when it actually blocks implementation, acceptance, or release. Existing decisions survive code changes that do not affect their premises; reopen affected decisions when evidence changes, and renormalize the scope when its boundary changes.
+When code changes, rerun relevant checks, review the resulting net effect, and reopen slices whose premises changed. Renormalize the scope when its boundary changes.
 
-The review is complete when every material behavior or boundary in the normalized range is classified under Human decisions, Agent-owned findings, or Folded; every frontier item is agreed, changed, or deferred; agent-owned changes are validated against the resulting net effect; and the scope remains valid. Reopen decisions whose premises changed. The human need not read every line. If a decision creates a durable architectural constraint, public API commitment, accepted risk, or maintenance trade-off, ask once at the end whether to persist it in an issue or documentation.
+The review is complete when every material behavior or boundary is represented by a reviewed slice or an explicit mechanical folded category; every non-mechanical range has at least one slice; each slice is accepted, redirected, or deferred; required agent work is handled or recorded; and the scope remains valid. If a judgment creates a durable architectural constraint, public API commitment, accepted risk, or maintenance trade-off, ask once at the end whether to persist it in an issue or documentation.
