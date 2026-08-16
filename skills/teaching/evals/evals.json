@@ -3,23 +3,25 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "I need to add OAuth token refresh to this service, but I have never worked with OAuth before. Teach me enough to maintain it, then help me implement it.",
-      "expected_output": "A project-grounded teaching session that first maps the user's relevant understanding, verifies OAuth facts, and teaches the current knowledge frontier without writing the implementation prematurely.",
+      "prompt": "I need to add OAuth token refresh, but I have never worked with OAuth before. This service stores access and refresh tokens in a server-side session; concurrent API requests can all receive 401 responses, and we currently have no refresh coordination. Teach me enough to maintain the change, then help me implement it.",
+      "expected_output": "A project-grounded teaching response that explains a useful OAuth refresh concept, its decision impact, and a concrete service example before asking any focused design question, then waits for separate implementation authorization.",
       "files": [],
       "expectations": [
         "The response ties teaching to the concrete token-refresh implementation rather than presenting a general OAuth course.",
-        "The response probes the user's mental model through a relevant explanation, prediction, comparison, or proposal.",
-        "The response does not begin implementation before the user participates in the design and explicitly confirms it.",
-        "Technical facts are investigated or identified for verification rather than delegated to the user."
+        "The response teaches a substantive concept, its causal impact on the design, and a project-grounded example before its first question.",
+        "Any question clarifies a requirement, jointly applies the explanation, or surfaces a real trade-off; it does not test recall, prediction, or explain-back.",
+        "The response does not begin implementation or treat understanding or design confirmation as permission to implement.",
+        "Technical facts are investigated or verified by the agent rather than delegated to the user."
       ]
     },
     {
       "id": 2,
-      "prompt": "Before we build this event-driven import pipeline, teach me why we might choose a queue over a synchronous request. I will have to own it afterward.",
-      "expected_output": "A compact decision-driven tutorial that builds a shared model of the queue trade-off using this project's constraints, then invites the user to predict or compare consequences.",
+      "prompt": "Before we change this import pipeline, teach me why we might choose a queue over a synchronous request. Imports currently run inside the HTTP request, can take two minutes, may be retried by clients, and must not be lost; we do not operate queue infrastructure yet. I will have to own it afterward.",
+      "expected_output": "A compact decision-driven explanation that teaches the queue trade-off from this project's constraints before using any question to apply the explanation collaboratively.",
       "files": [],
       "expectations": [
-        "The explanation covers a compact causal unit: concept, decision impact, and project-grounded example.",
+        "The explanation covers a compact causal unit: concept, decision impact, and project-grounded example before asking a question.",
+        "Any question helps clarify requirements, apply the explanation, or choose a trade-off instead of testing the user's understanding.",
         "The agent gives a recommendation with assumptions and costs instead of pretending to be neutral.",
         "The user retains control of value trade-offs.",
         "The response aims at sufficient maintenance understanding, not broad mastery of event-driven systems."
@@ -59,6 +61,18 @@
         "The response answers as an ordinary explanation.",
         "No knowledge-frontier interview or implementation gate is invented.",
         "No persistent course or project workflow is created."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "We have agreed that the import endpoint will enqueue a job, a worker will claim it with a lease, transient failures will retry three times, and exhausted jobs will enter a dead-letter queue. Your explanation makes sense, and I agree with this design.",
+      "expected_output": "A concise design summary followed by an explicit choice between more explanation, further co-design, or implementation, without beginning implementation from design confirmation alone.",
+      "files": [],
+      "expectations": [
+        "The response summarizes the design rationale, costs, failure modes, and remaining uncertainty.",
+        "The response offers more explanation, further co-design, and implementation as separate next steps.",
+        "The response does not interpret understanding or design agreement as authorization to implement.",
+        "No code changes or implementation steps begin before the user explicitly chooses implementation."
       ]
     }
   ]
