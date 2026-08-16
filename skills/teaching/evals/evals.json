@@ -1,0 +1,65 @@
+{
+  "skill_name": "teaching",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to add OAuth token refresh to this service, but I have never worked with OAuth before. Teach me enough to maintain it, then help me implement it.",
+      "expected_output": "A project-grounded teaching session that first maps the user's relevant understanding, verifies OAuth facts, and teaches the current knowledge frontier without writing the implementation prematurely.",
+      "files": [],
+      "expectations": [
+        "The response ties teaching to the concrete token-refresh implementation rather than presenting a general OAuth course.",
+        "The response probes the user's mental model through a relevant explanation, prediction, comparison, or proposal.",
+        "The response does not begin implementation before the user participates in the design and explicitly confirms it.",
+        "Technical facts are investigated or identified for verification rather than delegated to the user."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Before we build this event-driven import pipeline, teach me why we might choose a queue over a synchronous request. I will have to own it afterward.",
+      "expected_output": "A compact decision-driven tutorial that builds a shared model of the queue trade-off using this project's constraints, then invites the user to predict or compare consequences.",
+      "files": [],
+      "expectations": [
+        "The explanation covers a compact causal unit: concept, decision impact, and project-grounded example.",
+        "The agent gives a recommendation with assumptions and costs instead of pretending to be neutral.",
+        "The user retains control of value trade-offs.",
+        "The response aims at sufficient maintenance understanding, not broad mastery of event-driven systems."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Your proposed cache invalidation design makes sense now, but what if we use versioned keys instead? That seems easier for me to debug.",
+      "expected_output": "A collaborative reconsideration that treats the user's versioned-key proposal as design input, verifies its predicted behavior, and reopens affected choices instead of defending the original solution.",
+      "files": [],
+      "expectations": [
+        "The response evaluates the new proposal on evidence and project constraints.",
+        "The response updates the shared model and identifies affected trade-offs.",
+        "The agent may still recommend a position, but exposes its assumptions and costs.",
+        "The exchange does not become persuasion toward the agent's earlier answer."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Skip the lesson and implement the unfamiliar storage engine integration now. I accept that I may need help maintaining it later.",
+      "expected_output": "A brief statement of the concrete maintenance risk followed by respect for the user's explicit waiver, without forcing a lesson or pretending the risk is absent.",
+      "files": [],
+      "expectations": [
+        "The response recognizes an explicit waiver rather than continuing mandatory teaching.",
+        "The maintenance risk is stated concisely.",
+        "The agent proceeds only within normal implementation and safety constraints.",
+        "The response does not turn the waiver into an argument."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Explain what this regular expression does.",
+      "expected_output": "A near-miss trigger case: the teaching skill should not activate for an ordinary standalone explanation with no development implementation or maintenance goal.",
+      "files": [],
+      "expectations": [
+        "The teaching skill should not trigger from this prompt alone.",
+        "The response answers as an ordinary explanation.",
+        "No knowledge-frontier interview or implementation gate is invented.",
+        "No persistent course or project workflow is created."
+      ]
+    }
+  ]
+}

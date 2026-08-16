@@ -1,0 +1,47 @@
+[
+  {
+    "query": "I need to add OAuth token refresh to this service, but I have never worked with OAuth before. Teach me enough to maintain it, then help me implement it.",
+    "should_trigger": true,
+    "source": "derived from evals.json #1"
+  },
+  {
+    "query": "Before we build this event-driven import pipeline, teach me why we might choose a queue over a synchronous request. I will have to own it afterward.",
+    "should_trigger": true,
+    "source": "derived from evals.json #2"
+  },
+  {
+    "query": "I don't understand database isolation levels, but I need to implement transaction retries in this project and maintain them afterward.",
+    "should_trigger": true,
+    "source": "extra positive: unfamiliar technology in a maintainable development task"
+  },
+  {
+    "query": "Teach me how this repository's plugin lifecycle works before we change it together.",
+    "should_trigger": true,
+    "source": "extra positive: explicit learning before project implementation"
+  },
+  {
+    "query": "Explain what this regular expression does.",
+    "should_trigger": false,
+    "source": "derived from evals.json #5: ordinary explanation"
+  },
+  {
+    "query": "Give me a beginner tutorial on Rust ownership.",
+    "should_trigger": false,
+    "source": "near-miss: standalone tutorial"
+  },
+  {
+    "query": "Create a six-week Python course with lessons and progress records.",
+    "should_trigger": false,
+    "source": "near-miss: persistent course workspace"
+  },
+  {
+    "query": "Implement OAuth token refresh in this service.",
+    "should_trigger": false,
+    "source": "near-miss: ordinary implementation without an expressed knowledge gap"
+  },
+  {
+    "query": "Debug why this queue worker retries forever.",
+    "should_trigger": false,
+    "source": "near-miss: ordinary debugging"
+  }
+]
