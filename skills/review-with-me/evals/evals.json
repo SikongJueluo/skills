@@ -1,0 +1,44 @@
+{
+  "skill_name": "review-with-me",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The review map is already confirmed. Continue /review-with-me with the data-flow lens for my session-token change: validation sends an expired token to the refresh service, which writes the replacement to the session store. Show this lens in quick mode.",
+      "expected_output": "A self-contained data-flow slice with short numbered REVIEW markers in quoted code, matching detailed explanations below the blocks, all four plain-language fields, and an explicit input-to-side-effect trace.",
+      "files": [],
+      "expectations": [
+        "Annotations inside quoted code are limited to short numbered markers such as `// REVIEW ①`, with no explanatory prose inside the code block.",
+        "Each marker's detailed explanation appears below its code block under the matching number.",
+        "The slice contains What happens, Why it matters, Review, and Agent take in plain language.",
+        "The cross-file behavior is presented as input → processing → output or side effect rather than disconnected excerpts.",
+        "REVIEW markers are added only to the quoted copy of the code, never to project files, and the response issues no merge verdict."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/review-with-me the last three commits. They add a paid-plan upgrade flow: a new `plan_state` enum and table, an upgrade endpoint in the API layer, proration math in the billing service, and a webhook that cancels the old external subscription. I have never worked in the billing module. Keep the process flexible; pause only when my judgment is needed.",
+      "expected_output": "A concise orientation and adaptive review path select the useful lenses and order them by comprehension dependency; the agent pauses only when doing so improves the human review.",
+      "files": [],
+      "expectations": [
+        "The response gives a concise orientation and makes the review path visible because the change spans several unfamiliar behaviors.",
+        "The path selects relevant lenses and orders them by what the human must understand first rather than mechanically listing a fixed workflow.",
+        "A lens is omitted or mentioned as skipped without ceremonial bookkeeping when it adds no useful evidence.",
+        "The agent pauses only if the next material depends on human judgment or the response would otherwise become hard to review; it does not stop merely because a map exists.",
+        "The response makes what comes next clear without implying that the review is already complete."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "The /review-with-me scope and review map are already confirmed. Continue with the algorithms, control-flow, and failure-paths lens for the mail sender's retry-delay calculation, which uses attempt count, jitter, and a cap. This is my first time in this module.",
+      "expected_output": "A coherent algorithm review segment with a plain concrete step-by-step example, in-place term explanations, and a causal failure scenario, pausing only where human judgment is needed.",
+      "files": [],
+      "expectations": [
+        "Every slice contains What happens, Why it matters, Review, and Agent take in plain language rather than relying on pattern names.",
+        "The algorithm is walked through one concrete step-by-step example with real values.",
+        "Module or domain terms are explained in place at first use.",
+        "The Agent take names a concrete causal failure scenario rather than restating abstract nouns.",
+        "The response groups only material that is coherent to judge together and uses a progress summary only if more rounds or deferred decisions would otherwise be unclear."
+      ]
+    }
+  ]
+}

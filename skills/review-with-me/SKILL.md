@@ -26,9 +26,21 @@ Version 1 reviews a contiguous range, including the working copy when requested.
 
 The range limits what is judged, not where evidence may come from. Read relevant existing code, tests, documentation, callers, and commit descriptions, while reporting only matters introduced, exposed, or changed by the range.
 
+## Plan the review
+
+Understand every material behavior and boundary, using these lenses as prompts rather than a fixed checklist:
+
+- data structures, state, and contracts
+- data flow, state transitions, and lifecycle
+- algorithms, control flow, and failure paths
+- external interfaces, system boundaries, and side effects
+- overall risks and omissions
+
+Choose only the lenses that help explain this change, and order them by comprehension dependency. For a broad or unfamiliar change, show the human a short review map before the slices; for a focused change, a brief orientation can lead directly into the first slice. Mention a skipped lens only when its absence is useful evidence, not as bookkeeping.
+
 ## Build review slices
 
-Understand every material behavior and boundary in the range. Select the **load-bearing code** where a human's independent reading has value, especially:
+Within the chosen review path, select the **load-bearing code** where a human's independent reading has value, especially:
 
 - domain policy and user-visible behavior
 - control flow, failure handling, and irreversible effects
@@ -52,43 +64,49 @@ Use this compact shape, adapting labels when useful:
 ````markdown
 ### [Verify | Problem | Decision] <what this code controls>
 
-<one or two sentences establishing the mental model>
+**What happens:** <the behavior this code implements, in plain words>
+**Why it matters:** <what is at stake if it is wrong>
 
 ```<language>
-<enough exact code to understand the relevant behavior>
-// REVIEW ①: <annotation attached to the consequential line or branch>
+<short excerpt of the consequential code>
+// REVIEW ①
 ```
 
 **Review:** <the concrete thing for the human to check or decide>
-**Agent take:** <answer> — <single most important reason>
+**Agent take:** <answer> — <the concrete cause or failure scenario>
 Source: `<path:start-end>`
+
+① <detailed explanation of the marked line or branch, below the block>
 ````
 
-Quote the code directly in the response. Add `REVIEW` annotations only to the quoted copy, never to project files. Preserve enough surrounding control flow, inputs, and outcomes to make the question answerable; use multiple small excerpts when one excerpt would hide a cross-file contract. A source location supports the slice—it never substitutes for showing the code.
+Keep code blocks short. Mark the consequential lines with bare numbered markers such as `// REVIEW ①`, and put every detailed explanation below the block under the matching number. Prefer a marker on its own line; move it to the end of a line only when that does not widen the excerpt. Rewrap or reindent an excerpt for display only when the result stays semantically identical, and say so; the Source location still names the real position.
+
+Quote the code directly in the response. Add `REVIEW` markers only to the quoted copy, never to project files. Preserve enough surrounding control flow, inputs, and outcomes to make the question answerable. Show a cross-file flow inside one slice with several short blocks tracing input → transform → output or side effect, each carrying its own markers; a merged excerpt that hides the contract is worse than three small ones. A source location supports the slice—it never substitutes for showing the code.
 
 Expose uncertainty plainly. Say when no reliable agent take exists. Include a major consequence or unknown only when it changes the judgment.
 
-## Meet the human where they are
+## Explain for an unfamiliar reader
 
-Adapt the slice explanation to whether the human knows the concern and is familiar with the area:
+Assume by default that the human reads the language fluently but does not know this module or its domain; the four plain fields exist for that reader.
 
-- unknown + unfamiliar → teach the smallest useful mental model
-- unknown + familiar → point out the deviation or omission
-- known + unfamiliar → explain implementation evidence and trade-offs
-- known + familiar → show the critical code with minimal commentary
+- Explain a module or domain term in place the first time it appears; do not send the human elsewhere for vocabulary.
+- Write What happens as the behavior the code implements, not the pattern name it resembles.
+- Ground the Agent take in a concrete cause and failure scenario—what breaks, and along which path—never a restatement of abstract nouns.
+- For a data-flow slice, state the input → processing → output/side-effect trace explicitly, not only implicitly through the blocks.
+- For a complex algorithm, walk one concrete step-by-step example with real values instead of describing the steps abstractly.
 
-Infer this from natural cues such as “familiar”, “explain”, “I know the intent but not the implementation”, or “handle it”; start short and expand on request. Teaching covers the problem, how this code works, and the present trade-off—enough to review the slice rather than start a general lesson.
+When the human signals familiarity with the module or the concern, keep the fields terse for that slice and expand again on request. Teaching stays scoped to reviewing the slice—enough to judge it, not a general lesson.
 
 ## Run the human review
 
-Begin with a short orientation organized by behavior:
+Open with a short orientation: what the range changes, its observable behavior, assumptions the code cannot confirm, and what the agent checked. Use rounds when they reduce cognitive load, not to satisfy a fixed ceremony.
 
-- what the range is trying to change
-- the final observable behavior
-- assumptions the code cannot confirm
-- what the agent checked
-
-Order slices by consequence and present at most five per round. Accept natural responses: looks right, concern confirmed, choose differently, explain more, inspect more context, or defer. Recompute the remaining review after each round.
+- Keep each round coherent. It may follow one lens or combine tightly coupled lenses, and it may contain as many slices as the human can reasonably judge together.
+- Pause when the human needs to make a judgment, when the next material depends on that judgment, or when the response would become hard to review. Otherwise continue without inventing a checkpoint.
+- When work remains, end with a terse conclusion and say what comes next. Use a progress ledger only when several rounds or deferred decisions make progress unclear.
+- Accept natural responses: looks right, concern confirmed, choose differently, explain more, inspect more context, or defer.
+- Surface a consequential problem as soon as it matters, then reshape the remaining review around the human's response.
+- Recompute the remaining review after each response; a changed premise may reopen slices or reorder the path.
 
 Integrate consequential agent findings into **Problem** slices instead of placing them in a separate findings dump. Summarize only these outside slices:
 
