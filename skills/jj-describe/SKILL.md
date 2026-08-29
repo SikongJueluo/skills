@@ -12,6 +12,8 @@ Write Conventional Commits descriptions for jj commits. Read changes with **git*
 ## Safety
 
 - Mutate descriptions only. **Never** `merge`, `rebase`, or `push` unless the user explicitly asks.
+- Treat each repository as a **single-writer** for jj: issue at most one jj command, wait for it to exit, then issue the next. Never put multiple jj commands in parallel tool calls; even read-only jj commands may snapshot the working copy. Pure git reads may run in parallel.
+- If jj reports concurrent modification, divergence, or a failed Git HEAD update, stop and report it. Do not run `jj abandon`, `jj new`, or `jj rebase` as automatic recovery.
 - Always pass `--no-pager` to jj and git so output doesn't hang the session.
 
 ## 1. Pick targets
@@ -19,13 +21,13 @@ Write Conventional Commits descriptions for jj commits. Read changes with **git*
 - **User named a commit** (change_id / commit_id / revset like `@`, `@-`, `@--`): target **only** that one. Do not also sweep no-description commits.
 - **Nothing specified**: target every non-empty, undescribed commit of yours:
   ```
-  jj --no-pager log -r 'mine() & description(exact:"") & ~root() & ~empty()' --no-graph
+  jj --no-pager --color=never log -r 'mine() & description(exact:"") & ~root() & ~empty()' --no-graph -T 'change_id.short() ++ " " ++ commit_id.short() ++ "\n"'
   ```
   If empty, report "nothing to describe" and stop. If the list is long, show it and confirm before editing in bulk.
 
-## 2. For each target
+## 2. Inspect and draft
 
-Read the change with git — the jj `commit_id` is the git hash in colocated repos:
+Read every target before mutating anything. These pure git reads may run in parallel. The jj `commit_id` is the git hash in colocated repos:
 
 ```
 git --no-pager show <commit_id>
@@ -40,17 +42,51 @@ Draft a Conventional Commits message (https://www.conventionalcommits.org/en/v1.
 - Types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`, `style`, `build`, `ci`. Add `(scope)` when a clear module/path exists.
 - Body (optional): one `-` bullet per distinct change, **each starting with an imperative verb** (add, fix, remove, update, rename, extract, …).
 
-Apply with the **change_id** (stable across rewrites):
+## 3. Apply serially
 
-```
-jj desc -m "feat(auth): add login endpoint" -m "- validate email format
-- return JWT on success" <change_id>
+Apply with the **change_id** (stable across rewrites) and the exact `--stdin` + quoted-heredoc pattern below. It safely preserves blank lines and body bullets beginning with `-`:
+
+```bash
+jj --no-pager desc --stdin <change_id> <<'JJ_DESCRIPTION'
+feat(auth): add login endpoint
+
+- validate email format
+- return JWT on success
+JJ_DESCRIPTION
 ```
 
-One `-m` per paragraph; keep bullets consecutive inside a single `-m` so they form one body block.
+For multiple targets, run one `jj desc`, wait for exit code 0, then run the next in a later tool call. Stop the batch on the first failure. Use this transport rather than repeated `-m` flags or guessed file-input flags.
 
-## 3. Verify
+### Few-shot: two targets
 
+First assistant tool call — and the only jj call in that turn:
+
+```bash
+jj --no-pager desc --stdin mrpyxtqq <<'JJ_DESCRIPTION'
+feat(theme): add catppuccin mocha theming
+
+- add the catppuccin Home Manager module
+- replace hardcoded starship colors
+JJ_DESCRIPTION
 ```
-jj --no-pager log -r '<change_id> | @' --no-graph
+
+After that tool result exits successfully, the next assistant tool call:
+
+```bash
+jj --no-pager desc --stdin ysxvxtlo <<'JJ_DESCRIPTION'
+chore(flake): drop upstreamed patches
+
+- remove obsolete build overrides
+- update locked dependencies
+JJ_DESCRIPTION
 ```
+
+## 4. Verify
+
+After all writes finish, run one serial jj command containing every target and `@`:
+
+```bash
+jj --no-pager log -r 'mrpyxtqq | ysxvxtlo | @' --no-graph
+```
+
+Done means the command exits successfully and every target shows its intended description. A divergence error is a failure: stop and report it without cleanup mutations.
