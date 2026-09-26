@@ -1,6 +1,6 @@
 ---
 name: jj-describe
-description: Fill missing commit descriptions for Jujutsu (jj) commits, or rewrite a specified commit's description. Reads each change via git show/diff (jj's default diff is color-based and unreadable to the agent), drafts an English Conventional Commits message, and applies it with `jj desc`. Use whenever the user asks to write, fill, generate, or add commit messages/descriptions for jj commits, describe undescribed commits, or message a specific jj change/commit/revision — even without the word "skill".
+description: Write and apply concise, self-contained Conventional Commits descriptions for Jujutsu commits. Use when the user asks to describe a jj commit, and after completing a cohesive code or documentation change in a jj repository when the current non-empty commit is undescribed. Explain what changed and why without context-only planning labels such as P0 or P1.
 argument-hint: "[optional change_id | commit_id | revset, e.g. @, @-, llvznuql]"
 allowed-tools: Bash(jj *), Bash(git show *), Bash(git diff *), Bash(git log *)
 ---
@@ -18,8 +18,9 @@ Write Conventional Commits descriptions for jj commits. Read changes with **git*
 
 ## 1. Pick targets
 
+- **Automatic completion trigger** (the user did not ask for a description): inspect only `@`. Target it only when it is non-empty and undescribed. If its diff includes unrelated pre-existing work or its intent is unclear, leave it untouched and report why.
 - **User named a commit** (change_id / commit_id / revset like `@`, `@-`, `@--`): target **only** that one. Do not also sweep no-description commits.
-- **Nothing specified**: target every non-empty, undescribed commit of yours:
+- **User asked without naming a commit**: target every non-empty, undescribed commit of yours:
   ```
   jj --no-pager --color=never log -r 'mine() & description(exact:"") & ~root() & ~empty()' --no-graph -T 'change_id.short() ++ " " ++ commit_id.short() ++ "\n"'
   ```
@@ -38,9 +39,11 @@ If the repo isn't colocated (no `.git`), fall back to `jj --no-pager diff --git 
 Draft a Conventional Commits message (https://www.conventionalcommits.org/en/v1.0.0/):
 
 - **English, concise, plain text. No markdown** (no backticks, bold, or headers).
-- Header: `type(scope): summary` — lowercase, imperative, no trailing period.
+- Header: `type(scope): summary` — lowercase, imperative, no trailing period. Say **what** changed.
 - Types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`, `style`, `build`, `ci`. Add `(scope)` when a clear module/path exists.
-- Body (optional): one `-` bullet per distinct change, **each starting with an imperative verb** (add, fix, remove, update, rename, extract, …).
+- Make the message understandable without the task conversation. Replace temporary planning labels (`P0`, `P1`, phase names, option letters) with the concrete behavior, problem, or constraint they represent.
+- For non-trivial changes, add one short body paragraph explaining **why** the change was needed. Omit it only when the reason is already obvious from the header.
+- When several distinct changes need listing, add one `-` bullet per change, each starting with an imperative verb (add, fix, remove, update, rename, extract, …).
 
 ## 3. Apply serially
 
@@ -49,6 +52,8 @@ Apply with the **change_id** (stable across rewrites) and the exact `--stdin` + 
 ```bash
 jj --no-pager desc --stdin <change_id> <<'JJ_DESCRIPTION'
 feat(auth): add login endpoint
+
+Enable stateless API access while rejecting malformed identities.
 
 - validate email format
 - return JWT on success
@@ -63,9 +68,11 @@ First assistant tool call — and the only jj call in that turn:
 
 ```bash
 jj --no-pager desc --stdin mrpyxtqq <<'JJ_DESCRIPTION'
-feat(theme): add catppuccin mocha theming
+refactor(theme): source shell colors from catppuccin
 
-- add the catppuccin Home Manager module
+Keep starship and Home Manager on one palette instead of maintaining duplicated color constants.
+
+- enable the catppuccin Home Manager module
 - replace hardcoded starship colors
 JJ_DESCRIPTION
 ```
@@ -75,6 +82,8 @@ After that tool result exits successfully, the next assistant tool call:
 ```bash
 jj --no-pager desc --stdin ysxvxtlo <<'JJ_DESCRIPTION'
 chore(flake): drop upstreamed patches
+
+Use maintained upstream fixes so local overrides no longer drift across dependency updates.
 
 - remove obsolete build overrides
 - update locked dependencies
