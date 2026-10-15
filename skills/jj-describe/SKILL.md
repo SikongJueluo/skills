@@ -12,6 +12,7 @@ Write Conventional Commits descriptions for jj commits. Read changes with **git*
 ## Safety
 
 - Mutate descriptions only. **Never** `merge`, `rebase`, or `push` unless the user explicitly asks.
+- **Never rewrite another writer's recorded layer.** Targeting a revision other than your own blank `@` (e.g. `jj desc -r @-`, a change-id, a revset) rewrites that commit and rebases its descendants. Before `jj desc -r <rev>`, `jj squash`, `jj abandon`, or `jj restore` on such a revision, check it with one read-only log: `jj --no-pager --color=never log -r '<rev>' --no-graph -T 'change_id.short() ++ " | empty=" ++ empty ++ " | " ++ description.first_line() ++ "\n"'`. If it is **non-empty and already has a description**, stop and report it — that layer records another writer's work, not yours. Do not describe, squash, or abandon it; record your own work on a fresh `jj new` layer instead (the normal start-of-work path, not error recovery). Override only on an explicit user instruction that names the revision and asks to change its existing description, and warn that this rewrites the revision and rebases its descendants.
 - Treat each repository as a **single-writer** for jj: issue at most one jj command, wait for it to exit, then issue the next. Never put multiple jj commands in parallel tool calls; even read-only jj commands may snapshot the working copy. Pure git reads may run in parallel.
 - If jj reports concurrent modification, divergence, or a failed Git HEAD update, stop and report it. Do not run `jj abandon`, `jj new`, or `jj rebase` as automatic recovery.
 - Always pass `--no-pager` to jj and git so output doesn't hang the session.
@@ -19,7 +20,7 @@ Write Conventional Commits descriptions for jj commits. Read changes with **git*
 ## 1. Pick targets
 
 - **Automatic completion trigger** (the user did not ask for a description): inspect only `@`. Target it only when it is non-empty and undescribed. If its diff includes unrelated pre-existing work or its intent is unclear, leave it untouched and report why.
-- **User named a commit** (change_id / commit_id / revset like `@`, `@-`, `@--`): target **only** that one. Do not also sweep no-description commits.
+- **User named a commit** (change_id / commit_id / revset like `@`, `@-`, `@--`): target **only** that one. Do not also sweep no-description commits. When the target is not your own blank `@`, run the recorded-layer check in Safety first.
 - **User asked without naming a commit**: target every non-empty, undescribed commit of yours:
   ```
   jj --no-pager --color=never log -r 'mine() & description(exact:"") & ~root() & ~empty()' --no-graph -T 'change_id.short() ++ " " ++ commit_id.short() ++ "\n"'
