@@ -43,8 +43,14 @@ Draft a Conventional Commits message (https://www.conventionalcommits.org/en/v1.
 - Header: `type(scope): summary` — lowercase, imperative, no trailing period. Say **what** changed.
 - Types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`, `style`, `build`, `ci`. Add `(scope)` when a clear module/path exists.
 - Make the message understandable without the task conversation. Replace temporary planning labels (`P0`, `P1`, phase names, option letters) with the concrete behavior, problem, or constraint they represent.
-- For non-trivial changes, add one short body paragraph explaining **why** the change was needed. Omit it only when the reason is already obvious from the header.
-- When several distinct changes need listing, add one `-` bullet per change, each starting with an imperative verb (add, fix, remove, update, rename, extract, …).
+- Body (**why**): one short paragraph recording the **decision** — the approach taken and the constraint or tradeoff that forced it, naming the alternative you rejected when one was genuinely in play. Write what the diff cannot show, so a reader who never saw this task understands the choice. Omit the paragraph when the header already carries the reason.
+- Cap the why at **3 lines of at most 100 characters each**, rewrapping to fit. When the decision will not fit, the layer is too big — split it rather than trimming or padding the reason.
+- List distinct changes as one `-` bullet per change starting with an imperative verb (add, fix, remove, update, rename, extract, …), one line of at most 100 characters each. Bullets carry the per-change detail; the why paragraph stays separate.
+
+Body shape — decision first, diff never:
+
+    Good: "Pin nixpkgs per host: torch regressed on gfx1103 in the 2025-09 unstable bump."
+    Bad:  "Change the nixpkgs input to an older revision and update flake.lock."
 
 ## 3. Apply serially
 
@@ -99,4 +105,4 @@ After all writes finish, run one serial jj command containing every target and `
 jj --no-pager log -r 'mrpyxtqq | ysxvxtlo | @' --no-graph
 ```
 
-Done means the command exits successfully and every target shows its intended description. A divergence error is a failure: stop and report it without cleanup mutations.
+Done means the command exits successfully, every target shows its intended description, and each body honors the 3-line, 100-character bound. A divergence error is a failure: stop and report it without cleanup mutations.
