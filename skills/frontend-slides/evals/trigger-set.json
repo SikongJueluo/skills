@@ -1,0 +1,67 @@
+[
+  {
+    "query": "帮我做一份 12 页的中文产品发布会幻灯片，深色、编辑感强，最好有表格对比。",
+    "should_trigger": true,
+    "source": "derived from evals.json #1"
+  },
+  {
+    "query": "Use the Broadside template to make a six-slide Chinese pitch deck. I already chose the style, so skip the three previews.",
+    "should_trigger": true,
+    "source": "derived from evals.json #2"
+  },
+  {
+    "query": "把 quarterly-review.pptx 转成网页幻灯片，保留图片、表格和演讲者备注。",
+    "should_trigger": true,
+    "source": "derived from evals.json #3"
+  },
+  {
+    "query": "Our existing slides/index.html overflows on phones and two cards overlap. Fix it without changing the style.",
+    "should_trigger": true,
+    "source": "derived from evals.json #4"
+  },
+  {
+    "query": "Export the deck at ./deck/index.html to PDF at 1920x1080. Don't install Playwright.",
+    "should_trigger": true,
+    "source": "derived from evals.json #6"
+  },
+  {
+    "query": "Turn this outline into presentation slides for a 20-minute conference talk.",
+    "should_trigger": true,
+    "source": "extra positive: outline-to-deck"
+  },
+  {
+    "query": "Make it a single offline HTML file I can email, with the Chinese fonts and images embedded.",
+    "should_trigger": true,
+    "source": "derived from evals.json #7"
+  },
+  {
+    "query": "Build a landing page for our new analytics product with a hero, feature cards, pricing, and a signup form.",
+    "should_trigger": false,
+    "source": "derived from evals.json #5 (near-miss)"
+  },
+  {
+    "query": "Summarize this PowerPoint into a one-page memo for my manager.",
+    "should_trigger": false,
+    "source": "extra near-miss: document summarization, not a deck"
+  },
+  {
+    "query": "Design a poster for the meetup with the date and three speakers.",
+    "should_trigger": false,
+    "source": "extra near-miss: static poster, not a slide deck"
+  },
+  {
+    "query": "Fix the responsive CSS grid on our dashboard.",
+    "should_trigger": false,
+    "source": "extra near-miss: ordinary web page"
+  },
+  {
+    "query": "Write a blog post about why presentations are hard to maintain.",
+    "should_trigger": false,
+    "source": "extra near-miss: prose writing"
+  },
+  {
+    "query": "Here is our finished deck. Can you share it with the team?",
+    "should_trigger": false,
+    "source": "ambiguous share request; clarify before invoking deployment"
+  }
+]

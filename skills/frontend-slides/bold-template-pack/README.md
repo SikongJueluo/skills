@@ -56,13 +56,21 @@ labels such as "custom", "wildcard", "template", or "preview".
 content to copy. `preview.md` is only a lightweight style card for generating
 the three title-slide options.
 
+The pack's `design.md` files may mention `deck-stage.js`. That upstream
+web-component runtime is intentionally not bundled: generated decks use the
+inline controller documented in `../html-template.md`, which exposes
+`window.deck` and the `.slide` / `.active` / `.visible` contract the exporter
+understands. "Or an equivalent inline stage scaler" is the operative phrase.
+
 Preview slides must be real title slides for the user's deck. Do not render
 template names, option labels, file names, paths, `preview.md`, "generated
 from", or user requirement notes on the slide itself.
 
 When generating final slides:
 
-- Keep `frontend-slides` output as one self-contained HTML file.
+- Keep the output as one HTML file with CSS and JS inline. Images may live in a
+  relative `assets/` directory; a fully portable single file is an opt-in
+  variant, not the default.
 - Include the full contents of `viewport-base.css`.
 - Generate every deck as a fixed 1920×1080 stage scaled uniformly to the
   viewport. This applies even if the source template was originally
@@ -71,6 +79,8 @@ When generating final slides:
   proportions to translate into fixed 1920×1080 stage coordinates.
 - Preserve the selected template's fonts, palette, decorative vocabulary,
   spacing rhythm, and component grammar.
+- For Chinese/CJK text, follow the selected `design.md` CJK section; never apply
+  negative letter-spacing or uppercase transforms to CJK runs.
 - Keep the user's actual slide content primary. The template style should shape
   presentation, not override message or structure.
 - Verify rendered output for both text overflow and panel overlap. A card can

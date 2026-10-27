@@ -62,7 +62,13 @@ contract, Chinese text handling, and execution safety.
   or browser download at run time.
 - `references/deploy.md` — replaces `scripts/deploy.sh` with an explicit-consent
   checklist and host-neutral commands.
+- `LICENSE` — carries both upstream copyright notices for the imported skill and
+  design systems.
 - `evals/` — new for this repository.
+
+`STYLE_PRESETS.md`, `animation-patterns.md`, `bold-template-pack/selection-index.json`,
+and all 34 `preview.md` / `design.md` pairs are verbatim copies from the pinned
+commit. No template content was silently rewritten.
 
 ## Upgrading
 

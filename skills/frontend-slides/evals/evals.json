@@ -1,0 +1,107 @@
+{
+  "skill_name": "frontend-slides",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我做一份 10 页左右的中文技术分享幻灯片，主题是“把演示文稿做成可维护的网页”，受众是公司内部工程师。内容我还没整理，先给我一个方向。",
+      "expected_output": "A concise brief that reuses the supplied topic, audience, length, and language, asks only for the missing content/density facts in one batch, and explains the fixed-stage HTML deliverable before generating.",
+      "files": [],
+      "expectations": [
+        "The response reuses the given topic, audience, slide count, and Chinese language instead of asking for them again.",
+        "The response asks only for missing information, such as whether the content is ready and whether the deck is speaker-led or reading-first, in one compact batch.",
+        "The response does not ask the user to choose inline editing before a draft exists.",
+        "The response describes a fixed 1920x1080 stage that scales as a whole, not a responsive page.",
+        "If it starts generating, it uses Chinese-appropriate typography and verifies rendered slides rather than claiming visual success without evidence."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Use the Broadside template from the bold template pack to make a 6-slide internal pitch deck in Chinese. The title is “让基础设施更安静”. Do not show me three style options; I already chose the style.",
+      "expected_output": "A deck generation path that goes directly to the named Broadside template, reads only that template's design.md, and applies its two-register palette and CJK rules on the fixed stage.",
+      "files": [],
+      "expectations": [
+        "The response honors the named style and does not generate three exploratory previews.",
+        "The response reads only the selected Broadside design.md rather than bulk-reading the template pack.",
+        "The response preserves Broadside's orange/dark registers, Barlow/Noto Sans SC stack, and flat hairline structure while translating viewport proportions to 1920x1080 stage coordinates.",
+        "The response applies CJK rules such as zero letter-spacing, looser line height, and no uppercase transform to Chinese text.",
+        "The response verifies the rendered deck at desktop and phone viewports before claiming delivery."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Convert this 14-slide quarterly-review.pptx to an HTML deck. It has Chinese text, two tables, screenshots, and speaker notes. Keep the order and content; I will choose the visual style after I see the extraction.",
+      "expected_output": "A PPT conversion flow that extracts first, reports the actual slides/tables/images/notes, asks the user to confirm, then proceeds to style selection without inventing missing content.",
+      "files": [],
+      "expectations": [
+        "The response uses the PPTX extraction path before generating HTML and does not silently install dependencies.",
+        "The response reports slide count, titles, tables, images, and notes, and asks the user to confirm the extraction.",
+        "The response preserves slide order, tables as HTML tables, relative images, and speaker notes as comments.",
+        "The response continues to style selection only after extraction review, rather than asking abstract style questions first.",
+        "The response states any content the extractor could not represent instead of claiming perfect fidelity."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Our existing slides/index.html looks broken on phones: the title runs off the edge and one card overlaps another. Please fix it without changing the visual style. The deck already has its own working navigation.",
+      "expected_output": "A modification flow that reads the existing deck first, preserves its design and runtime, fixes the fixed-stage layout by splitting or reflowing within 1920x1080, and verifies desktop and phone screenshots.",
+      "files": [],
+      "expectations": [
+        "The response reads the existing HTML, CSS, and assets before modifying anything.",
+        "The response preserves the existing visual style and working navigation instead of replacing the deck with a new template.",
+        "The response keeps the 1920x1080 fixed stage and fixes overflow by splitting or tightening content, not by adding responsive breakpoints or shrinking text arbitrarily.",
+        "The response checks the result at 1280x720 and a phone viewport before claiming the overlap is fixed.",
+        "The response does not refactor unrelated markup."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Build a landing page for our new analytics product. It needs a hero section, three feature cards, pricing, and a signup form.",
+      "expected_output": "No frontend-slides invocation; this is an ordinary website task, not a slide deck.",
+      "files": [],
+      "expectations": [
+        "The response treats this as a website/landing-page task and does not apply the slide-deck workflow.",
+        "The response does not introduce the 16:9 fixed stage, slide navigation, or the bold template pack.",
+        "No slide-specific brief questions are asked."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Export my deck at ./deck/index.html to PDF. I do not have Playwright installed, and I would rather not download a browser right now.",
+      "expected_output": "A PDF export attempt that checks for a usable Chromium/Chrome, uses the dependency-free exporter if possible, and reports a missing browser clearly without installing anything silently or claiming a successful PDF.",
+      "files": [],
+      "expectations": [
+        "The response checks for Node and a Chromium/Chrome executable before promising a PDF.",
+        "The response does not install Playwright, run npm install, or download a browser without explicit user agreement.",
+        "If no browser is available, the response states that the PDF was not produced and names the missing dependency.",
+        "If a browser is available, the response uses the screenshot-based export path and verifies page count and rendered pages.",
+        "The response does not claim success from a command exit alone."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Make the deck a single HTML file I can email to a colleague. It must work offline, including the Chinese fonts and images.",
+      "expected_output": "A portable-file variant that inlines images and font resources, removes external requests, and verifies offline rendering instead of merely calling the normal deck “self-contained”.",
+      "files": [],
+      "expectations": [
+        "The response recognizes that the default deck is not a fully portable offline file and treats this as an explicit variant.",
+        "The response inlines images and either embeds the required font files or clearly states that a font fallback will change the design.",
+        "The response checks for remaining external references before claiming the file is offline.",
+        "The response verifies the result without network access or explains exactly what could not be verified.",
+        "The response does not claim full self-containment while leaving remote font URLs or relative assets in place."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Here is our finished deck. Can you share it with the team?",
+      "expected_output": "A clarification-first response that asks what “share” means and where the deck should go, and does not upload it publicly without explicit consent.",
+      "files": [],
+      "expectations": [
+        "The response does not upload the deck or run a deployment command on this ambiguous request.",
+        "The response asks whether the user means a local file, an internal location, or a public URL, and who the audience is.",
+        "If public hosting is chosen, the response limits the upload to the deck folder and its assets and explains takedown.",
+        "The response avoids global CLI installs and interactive login automation.",
+        "The response verifies the destination and assets after an authorized upload."
+      ]
+    }
+  ]
+}

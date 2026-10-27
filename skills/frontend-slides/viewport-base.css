@@ -76,7 +76,34 @@ svg {
     z-index: 1000;
 }
 
-/* 7. Print one fixed-size slide per page */
+/* 7. Export mode: freeze every entrance effect at its final state.
+   The exporter navigates with ?export=1 before taking screenshots. */
+html.is-exporting *,
+html.is-exporting *::before,
+html.is-exporting *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    transition: none !important;
+}
+
+html.is-exporting .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+}
+
+html.is-exporting .deck-controls,
+html.is-exporting .edit-hotzone,
+html.is-exporting .edit-toggle {
+    display: none !important;
+}
+
+/* 8. Print one fixed-size slide per page */
+@page {
+    size: 1920px 1080px;
+    margin: 0;
+}
+
 @media print {
     html,
     body {
@@ -117,17 +144,27 @@ svg {
         page-break-after: auto;
     }
 
-    .deck-controls {
+    .deck-controls,
+    .edit-hotzone,
+    .edit-toggle {
         display: none !important;
+    }
+
+    .slide .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
     }
 }
 
-/* 8. Reduced motion */
+/* 9. Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
+        animation-delay: 0.01ms !important;
         animation-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
         transition-duration: 0.2s !important;
     }
 }
