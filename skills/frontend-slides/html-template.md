@@ -48,6 +48,7 @@ then verify that no `http(s)://` or `assets/` dependency remains.
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
             --accent: #00ffcc;
+            --deck-chrome: rgba(255, 255, 255, 0.55);
 
             --font-display: 'Noto Sans SC', 'Source Han Sans SC', 'LXGW WenKai', sans-serif;
             --font-body: 'Noto Sans SC', 'Source Han Sans SC', 'LXGW WenKai', sans-serif;
@@ -150,7 +151,7 @@ then verify that no `http(s)://` or `assets/` dependency remains.
             transform: none;
             z-index: 1000;
             font: 14px/1.4 ui-monospace, monospace;
-            color: rgba(255, 255, 255, 0.55);
+            color: var(--deck-chrome);
             pointer-events: none;
         }
 
@@ -223,6 +224,7 @@ then verify that no `http(s)://` or `assets/` dependency remains.
         </main>
     </div>
 
+    <!-- Optional: remove if the deck design already has its own page chrome. -->
     <div class="deck-controls" aria-hidden="true">
         <span data-deck-current>1</span> / <span data-deck-total>1</span>
     </div>
