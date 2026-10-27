@@ -5,6 +5,7 @@ A small collection of reusable skills for coding agents.
 ## Included skills
 
 - [`arch-code-review`](skills/arch-code-review/SKILL.md) — Reviews a diff, PR, or branch from an architecture-first perspective and decides whether its minimum end-to-end loop is mergeable.
+- [`frontend-slides`](skills/frontend-slides/SKILL.md) — Builds, converts, and revises fixed-stage 16:9 HTML presentations with a large design template pack.
 - [`jj-describe`](skills/jj-describe/SKILL.md) — Writes and applies concise, self-contained Conventional Commits descriptions to Jujutsu commits, on request or after completing a change.
 - [`jj-desc`](skills/jj-desc/SKILL.md) — Provides a user-invoked alias that starts a `jj-describe` session.
 - [`review-with-me`](skills/review-with-me/SKILL.md) — Curates load-bearing code into focused slices for collaborative human review.
