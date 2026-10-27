@@ -1,6 +1,6 @@
 ---
 name: frontend-slides
-description: Create, convert, or revise browser-based 16:9 HTML slide decks, including PPT/PPTX conversion, Chinese/CJK typography, and PDF export. Use when the user asks for a presentation, slide deck, pitch or talk slides, or wants an existing HTML deck changed. Not for ordinary websites, landing pages, or written documents.
+description: Create, convert, or revise browser-based 16:9 HTML slide decks, including PPT/PPTX conversion, Chinese/CJK typography, and PDF export. Use when the user asks for a presentation, slide deck, pitch or talk slides, or wants an existing HTML deck changed. Not for ordinary websites, landing pages, written documents, or summarizing an existing presentation.
 argument-hint: "[deck request, .pptx path, or existing HTML deck]"
 ---
 
