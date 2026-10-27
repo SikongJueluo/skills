@@ -73,6 +73,8 @@ and at least one PDF page before reporting success.
   check that its user profile can be created in a temp directory.
 - **Fonts missing:** remote Fontshare/Google Fonts need network access; system
   CJK fallbacks may differ. The layout may change when a webfont fails.
+- **Images missing after editing:** the saved copy is outside the deck folder.
+  Move it next to `assets/`; relative URLs resolve from the HTML file's location.
 - **0 slides:** the deck does not use `class="slide"`; this exporter requires
   that contract.
 - **Wrong slide captured:** the deck's custom navigation may not implement

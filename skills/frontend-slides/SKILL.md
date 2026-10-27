@@ -126,12 +126,14 @@ Inspect the PNGs — actually look at them, not just at file sizes. Then check:
   `.reveal` elements are visible in the captured final state.
 - Navigation works, and typing in the editor does not change slides.
 - `Ctrl/Cmd+S` downloads a cleaned copy and does not write back to the source file.
+  If you test it, move the download into the deck folder next to `assets/`
+  before reopening; a copy left in Downloads cannot load the deck's images.
 
 If no browser or screenshot capability exists, say exactly that and report which checks remain unverified. Completion: every slide inspected at desktop and phone sizes, or the limitation is stated explicitly.
 
 ## 6. Deliver
 
-Report the deck path, slide count, style name, navigation keys, and how editing works. Mention that browser save downloads a new HTML file rather than overwriting the source, and that images live in `assets/`.
+Report the deck path, slide count, style name, navigation keys, and how editing works. Mention that browser save downloads a new HTML file rather than overwriting the source, that images live in `assets/`, and that the downloaded file must be moved into the deck folder next to `assets/` before it is reopened or exported.
 
 Use the agent's file-present or open capability when available; otherwise give the path. Never assume macOS `open`, a desktop session, or a GUI browser.
 

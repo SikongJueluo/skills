@@ -43,6 +43,7 @@ then verify that no `http(s)://` or `assets/` dependency remains.
            THEME — change these to change the deck
            =========================================== */
         :root {
+            /* Light theme: change stage-bg, slide-bg, and text-primary together. */
             --stage-bg: #0a0f1c;
             --slide-bg: #0a0f1c;
             --text-primary: #ffffff;
@@ -64,6 +65,16 @@ then verify that no `http(s)://` or `assets/` dependency remains.
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* The theme's primary text color must reach the slides. Headings inherit
+           from body; p/li opt into --text-secondary below. */
+        body {
+            color: var(--text-primary);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: inherit;
+        }
 
         /* --- PASTE THE FULL viewport-base.css CONTENTS HERE --- */
 
@@ -196,6 +207,21 @@ then verify that no `http(s)://` or `assets/` dependency remains.
 
         html.is-editing .slide {
             cursor: text;
+        }
+
+        .save-notice {
+            position: fixed;
+            left: 50%;
+            bottom: 64px;
+            transform: translateX(-50%);
+            z-index: 10002;
+            max-width: 780px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.86);
+            color: #fff;
+            font: 14px/1.5 ui-monospace, monospace;
+            pointer-events: none;
         }
 
         html.is-exporting .deck-controls,
@@ -498,6 +524,17 @@ then verify that no `http(s)://` or `assets/` dependency remains.
                     link.click();
                     link.remove();
                     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+                    this.showSaveNotice();
+                }
+
+                showSaveNotice() {
+                    document.querySelectorAll('.save-notice').forEach((el) => el.remove());
+                    const notice = document.createElement('div');
+                    notice.className = 'save-notice';
+                    notice.textContent =
+                        'Downloaded. Put this file next to assets/ in the deck folder before opening.';
+                    document.body.appendChild(notice);
+                    setTimeout(() => notice.remove(), 7000);
                 }
             }
 
@@ -508,6 +545,10 @@ then verify that no `http(s)://` or `assets/` dependency remains.
 </body>
 </html>
 ```
+
+The example sets `color: var(--text-primary)` on `body`, and headings inherit it.
+For a light deck, override `--stage-bg`, `--slide-bg`, and `--text-primary`
+together; do not leave a white title color on a light background.
 
 ## Stage scaling
 
@@ -558,17 +599,25 @@ decks should always implement the contract above.
 Editing is a post-draft affordance, included unless the user asks for a locked
 or export-only file.
 
-- `E` or the top-left button toggles edit mode. While editing, navigation keys
-  are disabled so they move the caret instead of the deck.
+- `E` enters edit mode; the top-left button toggles it; `Esc` exits. While
+  editing, navigation keys are disabled so they move the caret instead of the
+  deck.
 - Editable text: headings, paragraphs, list items, quotes, captions, and table
   cells. `pre`, `code`, `.no-edit`, and `[data-no-edit]` stay locked.
 - `Esc` exits edit mode.
 - `Ctrl/Cmd+S` downloads a **new** HTML file. It never writes back to the source
   file, and there is intentionally no localStorage autosave: a stale browser
   draft silently overriding the source is worse than an explicit download.
+- The browser cannot write into the deck folder for you. Before opening the
+  downloaded file, move it into the deck folder next to `assets/`. A short
+  notice in the editor repeats this instruction after the download. For a deck at
+  `my-deck/index.html`, either replace `my-deck/index.html` with the download or
+  keep it as `my-deck/index-edited.html`; both paths resolve `assets/`. A copy
+  left in the Downloads folder cannot load the deck's images.
 - `serialize()` removes editor state, resets the deck to slide 1, and strips
-  `contenteditable` from the downloaded copy. Test that the cleaned copy still
-  opens and navigates.
+  `contenteditable` from the downloaded copy. Reopen the copy from the deck
+  folder, confirm its images load, and export the PDF once to check the image
+  slides before treating the edit as delivered.
 
 The button hover behavior uses JS classes with a grace period. Do not replace it
 with a CSS `~` sibling selector: `pointer-events: none` breaks the hover chain,
