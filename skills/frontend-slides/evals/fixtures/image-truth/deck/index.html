@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is Simpler Always Better?</title>
+<style>
+  :root { --bg: #f2eee6; --ink: #191815; --muted: #6d675e; --accent: #b23a2a; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0d0d0c; }
+  #stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; transform-origin: center; }
+  .slide { position: absolute; inset: 0; padding: 110px 150px; display: flex; flex-direction: column; justify-content: center; gap: 36px; visibility: hidden; opacity: 0; }
+  .slide.active { visibility: visible; opacity: 1; }
+  .eyebrow { margin: 0; font: 600 22px/1.2 ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  h1 { margin: 0; font-size: 150px; line-height: .95; letter-spacing: -.03em; font-weight: 400; }
+  h2 { margin: 0; font-size: 100px; line-height: 1; letter-spacing: -.02em; font-weight: 400; }
+  p { margin: 0; font-size: 34px; line-height: 1.5; color: var(--muted); max-width: 1100px; }
+  .sub { font-size: 38px; color: var(--ink); }
+  .split { display: grid; grid-template-columns: 620px 1fr; gap: 90px; align-items: center; }
+  figure { margin: 0; }
+  img { display: block; width: 100%; max-height: 620px; object-fit: contain; background: #e7e2d8; }
+  figcaption { margin-top: 22px; font-size: 24px; line-height: 1.4; color: var(--muted); }
+  .point { font-size: 44px; line-height: 1.35; color: var(--ink); }
+  .footer { position: absolute; left: 150px; bottom: 70px; font: 500 20px/1 ui-monospace, monospace; letter-spacing: .08em; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <section class="slide active">
+    <p class="eyebrow">Design history seminar</p>
+    <h1>Is Simpler<br>Always Better?</h1>
+    <p class="sub">Dieter Rams, attention, and the cost of taking things away.</p>
+    <div class="footer">01 / 06</div>
+  </section>
+  <section class="slide">
+    <p class="eyebrow">02 · The promise</p>
+    <h2>Less became a virtue.</h2>
+    <p>Rams's Braun years gave "less but better" a visual form: calm surfaces, few controls, a grid that holds.</p>
+    <div class="footer">02 / 06</div>
+  </section>
+  <section class="slide">
+    <p class="eyebrow">03 · The counter-case</p>
+    <h2>Complexity moves the cost.</h2>
+    <p>A door that needs a sign, a menu that hides the setting, a remote that asks the thumb to remember.</p>
+    <div class="footer">03 / 06</div>
+  </section>
+  <section class="slide">
+    <p class="eyebrow">04 · The test</p>
+    <h2>Can it be used without instructions?</h2>
+    <p>Not "does it look simple" — does every control earn its place, and can someone act without guessing?</p>
+    <div class="footer">04 / 06</div>
+  </section>
+  <section class="slide">
+    <p class="eyebrow">05 · The cost of simplicity</p>
+    <h2>Too many buttons.</h2>
+    <div class="split">
+      <figure>
+        <img src="assets/remote-back.png" alt="A television remote covered in dozens of small buttons.">
+        <figcaption>A modern television remote packs dozens of small buttons into the thumb's reach.</figcaption>
+      </figure>
+      <p class="point">Every added control is a decision pushed onto the person holding it.</p>
+    </div>
+    <div class="footer">05 / 06</div>
+  </section>
+  <section class="slide">
+    <p class="eyebrow">06 · Close</p>
+    <h2>Simplicity is an argument about attention.</h2>
+    <p class="sub">What would you remove first — and what would break if you did?</p>
+    <div class="footer">06 / 06</div>
+  </section>
+</div>
+<script>
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  let index = 0;
+  function fit() {
+    const scale = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  }
+  function show(next) {
+    index = Math.max(0, Math.min(slides.length - 1, next));
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+  }
+  addEventListener('resize', fit);
+  addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight' || event.key === ' ') show(index + 1);
+    if (event.key === 'ArrowLeft') show(index - 1);
+  });
+  fit();
+</script>
+</body>
+</html>

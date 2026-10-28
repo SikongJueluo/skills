@@ -11,7 +11,7 @@
         "The response asks only for missing information, such as whether the content is ready and whether the deck is speaker-led or reading-first, in one compact batch.",
         "The response does not ask the user to choose inline editing before a draft exists.",
         "The response describes a fixed 1920x1080 stage that scales as a whole, not a responsive page.",
-        "If it starts generating, it uses Chinese-appropriate typography and verifies rendered slides rather than claiming visual success without evidence."
+        "It does not generate a full deck or treat a visual direction as chosen before the content and the user's style choice are settled."
       ]
     },
     {
@@ -71,6 +71,7 @@
       "files": [],
       "expectations": [
         "The response checks for Node and a Chromium/Chrome executable before promising a PDF.",
+        "The response does not ask about visual direction, templates, or previews for an export-only request.",
         "The response does not install Playwright, run npm install, or download a browser without explicit user agreement.",
         "If no browser is available, the response states that the PDF was not produced and names the missing dependency.",
         "If a browser is available, the response uses the screenshot-based export path and verifies page count and rendered pages.",
@@ -101,6 +102,79 @@
         "If public hosting is chosen, the response limits the upload to the deck folder and its assets and explains takedown.",
         "The response avoids global CLI installs and interactive login automation.",
         "The response verifies the destination and assets after an authorized upload."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "根据我们已经讨论好的内容做一份 6 页英文 HTML PPT，放到 assets/course/。讨论材料在 evals/fixtures/design-direction/notes.md。主题是 Dieter Rams 和“少即是多”，浅色背景、深色大字。",
+      "expected_output": "Before generating the full deck, it reads the material, treats light background/dark large type as a constraint rather than a selected style, presents concrete visual directions using the deck's real content, and waits for the user to choose (or records an explicit prior choice or delegation).",
+      "files": [
+        "evals/fixtures/design-direction/notes.md"
+      ],
+      "expectations": [
+        "The response reads the supplied material and reuses the known topic, length, language, and output path instead of asking for them again.",
+        "It does not write the final assets/course/index.html or generate a complete six-slide deck before the user has chosen a visual direction.",
+        "It treats “light background, dark text, large type” as a constraint and does not declare a preset or template chosen from it.",
+        "It presents two or three concrete visual directions built from the deck's real title and content, rather than asking the user to name style terms or describe a style in words.",
+        "It waits for the user's choice, or records an explicit delegation, before expanding the full deck."
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "用 evals/fixtures/design-direction/notes.md 里的材料做一份 5 页英文 deck，放在 ./deck/。风格你定，不要问我，直接做。保持可读。",
+      "expected_output": "A direct generation path that does not run a preview round, states the chosen direction and why it fits the material, and still applies content-truth and design checks before delivery.",
+      "files": [
+        "evals/fixtures/design-direction/notes.md"
+      ],
+      "expectations": [
+        "It does not ask the user to choose a style or show three previews.",
+        "It states the chosen visual direction and the reason it fits the material before or while generating.",
+        "It still checks images and claims for content truth, not only overflow and navigation.",
+        "It applies the design review to hierarchy, focal points, and decoration rather than only technical checks.",
+        "It reports any check it could not perform instead of claiming full visual verification."
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Review the deck at evals/fixtures/image-truth/deck/ before I present it. The argument on slide 5 is that modern remotes have too many buttons. Check that it holds together.",
+      "expected_output": "A review that opens the image, finds that it shows the back or battery compartment rather than buttons, and treats the mismatch as a content error rather than passing the slide on layout.",
+      "files": [
+        "evals/fixtures/image-truth/deck/index.html",
+        "evals/fixtures/image-truth/deck/assets/remote-back.png"
+      ],
+      "expectations": [
+        "It opens the image or uses a vision check instead of trusting the filename, alt text, or caption.",
+        "If it cannot inspect the image itself, it delegates to a vision-capable agent or asks the user rather than passing the slide.",
+        "It reports that the image does not show buttons and therefore does not support the claim on slide 5.",
+        "It proposes replacing the image, changing the claim, or removing the slide content rather than keeping the image because the path loads.",
+        "It separates this content failure from technical checks such as overflow, broken image paths, or navigation.",
+        "It does not report the deck as ready to present while the mismatch remains."
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "做一份 8 页中文教学 deck，主题是给新工程师讲 code review。我会现场讲，把讲稿和时间提示也放进文件里，但幻灯片本身要干净，观众只看该看的内容。",
+      "expected_output": "A deck that puts talk track, timing, and facilitation prompts in HTML comments or a separate notes channel, keeps visible slides audience-facing, and applies the CJK and technical checks.",
+      "files": [],
+      "expectations": [
+        "It keeps talk track, timing, and facilitation prompts out of visible slide surfaces.",
+        "It puts them in HTML comments, a notes file, or another non-audience channel.",
+        "It does not add visible speaker chrome such as “ask the room” prompts or minute markers to the slides.",
+        "It applies Chinese typography rules such as zero letter-spacing, generous line height, and no uppercase transform.",
+        "It verifies the rendered deck at desktop and phone sizes before delivery."
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "上一版 deck 一眼就是 AI 生成的：每页都有边框、小标签和编号，观众不知道先看哪。内容都在。下一版你会怎么改？不要加更多装饰。",
+      "expected_output": "A diagnosis that names the repeated chrome and competing focal points, then proposes subtraction and re-ranking of the existing content before re-rendering, rather than adding decoration or only adjusting spacing.",
+      "files": [],
+      "expectations": [
+        "It identifies specific repeated elements and competing focal points rather than answering with generic style advice.",
+        "It proposes removing or reducing elements and re-ranking or splitting content, not adding new decoration or only changing spacing.",
+        "It preserves the existing content and visual direction unless the user asks to change them.",
+        "It re-renders and inspects the deck after the change.",
+        "It separates content errors from design problems when both are present."
       ]
     }
   ]

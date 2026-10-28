@@ -48,7 +48,11 @@ contract, Chinese text handling, and execution safety.
 
 - `SKILL.md` — rewritten routing, branch split, CJK guidance, and delivery
   contract. Upstream phases were consolidated; behavior-specific branches moved
-  to `references/`.
+  to `references/`. The direction gate, representative body page, three-pass
+  verification, image-truth rule, and audience/speaker separation are local
+  behavior changes, not consolidation.
+- `references/design-review.md` — new local reference for image truth, page
+  composition, decoration audits, whole-deck review, and generic-feel diagnosis.
 - `html-template.md` — export/edit contract made concrete, image sizing fixed
   to the 1920×1080 stage, unsupported "fully self-contained" claims corrected.
 - `viewport-base.css` — export freeze helper and printing fixes; the stage,
@@ -64,11 +68,34 @@ contract, Chinese text handling, and execution safety.
   checklist and host-neutral commands.
 - `LICENSE` — carries both upstream copyright notices for the imported skill and
   design systems.
-- `evals/` — new for this repository.
+- `evals/` — new for this repository; includes direction-gate, explicit
+  delegation, image-truth, audience/speaker, and generic-feel cases.
 
 `STYLE_PRESETS.md`, `animation-patterns.md`, `bold-template-pack/selection-index.json`,
 and all 34 `preview.md` / `design.md` pairs are verbatim copies from the pinned
 commit. No template content was silently rewritten.
+
+## Behavioral differences from upstream
+
+These are deliberate workflow changes, not consolidation.
+
+- **Direction gate.** Upstream generates three previews and waits for a pick; a
+  named template is still shown as one of the three. Local keeps the preview
+  default and adds direct paths for a named style, a prior choice, or explicit
+  delegation. A layout constraint such as "light background, large type" is
+  never a selection.
+- **Representative body page.** After the direction is chosen, the hardest
+  content page is built before the rest. Image, table, chart, and dense
+  comparison decks show that page to the user before expanding.
+- **Image truth.** Upstream falls back to filenames and metadata when image
+  reading is unavailable. Local requires opening the image, a vision-capable
+  delegate, or the user, and forbids claiming verification from metadata.
+- **Three verification passes.** Content truth and design are checked separately
+  from the technical screenshot list; a clean render does not pass them.
+- **Audience/speaker separation.** Talk track and facilitation prompts stay off
+  the visible slide surface unless the user asks for a teaching handout.
+- **Preset/custom fidelity.** The design-system preservation rule explicitly
+  covers named presets and custom directions, not only bold templates.
 
 ## Upgrading
 
