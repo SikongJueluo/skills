@@ -1,0 +1,52 @@
+[
+  {
+    "query": "This page works, but it feels cluttered and I can't tell where to look. Clean it up without changing the design direction.",
+    "should_trigger": true,
+    "source": "derived from evals.json #1"
+  },
+  {
+    "query": "The deck is basically fine, but it has too much text and too many decorations. Make it more restrained.",
+    "should_trigger": true,
+    "source": "derived from evals.json #1"
+  },
+  {
+    "query": "These settings screens feel inconsistent: headings move around and the same label style is doing three different jobs. Unify them, but don't make every page identical.",
+    "should_trigger": true,
+    "source": "derived from evals.json #2"
+  },
+  {
+    "query": "Every card has a border, a shadow, and a highlight, and the page looks AI-generated. Make it calmer without losing its character.",
+    "should_trigger": true,
+    "source": "derived from evals.json #3"
+  },
+  {
+    "query": "This landing page looks cheap and unfinished. I don't want more effects; make it look intentional.",
+    "should_trigger": true,
+    "source": "derived from evals.json #4"
+  },
+  {
+    "query": "Build a new analytics dashboard for my SaaS from scratch with a dark theme and a sidebar.",
+    "should_trigger": false,
+    "source": "derived from evals.json #7: greenfield creation"
+  },
+  {
+    "query": "Show me three completely different visual directions for this app. I don't like the current one at all.",
+    "should_trigger": false,
+    "source": "near-miss: direction exploration, not a bounded revision"
+  },
+  {
+    "query": "Convert this PPTX into an HTML slide deck.",
+    "should_trigger": false,
+    "source": "near-miss: deck production belongs to frontend-slides"
+  },
+  {
+    "query": "Fix the bug where the save button does not submit the form.",
+    "should_trigger": false,
+    "source": "near-miss: functional debugging, not visual revision"
+  },
+  {
+    "query": "Make the logo bigger and change the primary button to blue.",
+    "should_trigger": false,
+    "source": "near-miss: a specified visual change with no diagnosis needed"
+  }
+]

@@ -10,6 +10,7 @@ A small collection of reusable skills for coding agents.
 - [`frontend-slides`](skills/frontend-slides/SKILL.md) — Builds, converts, and revises fixed-stage 16:9 HTML presentations with a large design template pack.
 - [`jj-describe`](skills/jj-describe/SKILL.md) — Writes and applies concise, self-contained Conventional Commits descriptions to Jujutsu commits, on request or after completing a change.
 - [`jj-desc`](skills/jj-desc/SKILL.md) — Provides a user-invoked alias that starts a `jj-describe` session.
+- [`refactor-ui`](skills/refactor-ui/SKILL.md) — Improves an existing UI or visual artifact from concrete feedback: diagnose the complaint, read design guidance on demand, make a bounded revision, and verify the original problem improved.
 - [`review-with-me`](skills/review-with-me/SKILL.md) — Curates load-bearing code into focused slices for collaborative human review.
 - [`teaching`](skills/teaching/SKILL.md) — Intertwines teaching and co-design to build a shared technical model before implementing a maintainable change.
 - [`teach-me`](skills/teach-me/SKILL.md) — Provides a user-invoked alias that starts a `teaching` session.

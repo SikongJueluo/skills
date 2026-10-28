@@ -1,0 +1,101 @@
+{
+  "skill_name": "refactor-ui",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "This six-slide deck for a three-minute talk works overall, but it feels like it stuffs in everything and has no restraint. The headings and labels also feel inconsistent across pages, and there is too much decoration. Improve it without changing the visual direction. The source is an HTML deck with speaker notes; render it before and after.",
+      "expected_output": "A bounded revision that treats the feedback as several testable causes: it renders a baseline, identifies repeated blocks that can move to speaker notes, keeps the core claims and the single closing move, stabilizes the heading and label roles without templating every slide, reduces stacked emphasis while preserving a distinctive element, and verifies the result against the original complaints.",
+      "files": [],
+      "expectations": [
+        "The response captures a rendered baseline and states what must be preserved before editing.",
+        "The diagnosis separates the user's feelings from concrete causes and names the elements involved.",
+        "Duplicate explanation or speaker prompts are moved to notes rather than uniformly cut across every slide.",
+        "Core claims, required credits, and the closing argument survive the revision.",
+        "Heading and label roles are given a stable rule while legitimate layout variation remains.",
+        "At least one distinctive visual element is preserved rather than flattened by the cleanup.",
+        "Images used as evidence are opened and checked against their captions, or the image check is explicitly reported unverified.",
+        "The result is re-rendered and compared with the baseline for the original complaints, not only for overflow or errors."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The settings pages in this admin app feel like they were made by different people. Page titles sometimes sit in a top band and sometimes inside the content column, and the same mono label style is used for categories, help text, and buttons. Unify the pages, but do not make every page share one layout.",
+      "expected_output": "A role-based consistency pass: inventory the actual roles, define a small grammar for titles and labels, fix the ambiguous or outlier instances, preserve variation that follows content structure, and avoid turning the pages into one template.",
+      "files": [],
+      "expectations": [
+        "The response inventories roles and current treatments before editing.",
+        "The response distinguishes a real role difference from an accidental inconsistency.",
+        "Title placement or label semantics are given one rule, or an intentional distinction is made systematic.",
+        "Legitimate page variation is preserved rather than removed.",
+        "The change is scoped to the inconsistent roles, not a wholesale redesign of the app."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "This page looks AI-generated and exhausting: every card has a border, a shadow, and a colored highlight, and every section has a badge. Make it calmer. I still like the bold yellow accent and the chunky type, so do not turn it into a gray minimal page.",
+      "expected_output": "An emphasis pass that audits decoration by job, reduces stacked emphasis and competing focal points, keeps the yellow accent and chunky type as the memory point, and does not equate restraint with removing all identity.",
+      "files": [],
+      "expectations": [
+        "The response audits repeated decoration and names the job, or lack of job, for each pattern.",
+        "Competing emphasis levers are reduced rather than replaced with a different decoration.",
+        "The user's stated likes (yellow accent, chunky type) survive.",
+        "The result keeps a clear first read instead of merely making everything quieter.",
+        "The response avoids adding new effects to compensate for the removed ones."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "This landing page looks cheap and unfinished. I do not want more gradients, shadows, or icons. Make it look intentional. The copy and the section order are staying.",
+      "expected_output": "A craft pass that diagnoses broken relationships first — alignment, spacing, type scale, color roles, image treatment — makes one decisive content-specific move, leaves the copy and section order intact, and does not pile on effects.",
+      "files": [],
+      "expectations": [
+        "The response diagnoses alignment, spacing, type, or color relationships before proposing decoration.",
+        "The copy and section order are preserved.",
+        "Any expressive addition is one decisive move tied to the content, not a set of effects.",
+        "The response verifies the result at the actual viewing size.",
+        "The response does not claim that a clean technical render proves the page now looks intentional."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Before I change anything: look at this screen and tell me what is wrong and what you would do about it. Do not edit the files yet.",
+      "expected_output": "An analysis-only response: inspect the artifact, separate observations from hypotheses, propose a bounded set of changes with expected signals, and leave the files untouched.",
+      "files": [],
+      "expectations": [
+        "No files are edited.",
+        "Observations, causes, and proposed changes are distinguishable.",
+        "The proposed changes are bounded and tied to the observed problems.",
+        "The response states what it could not verify without rendering or interaction.",
+        "The response asks for a decision only where a real direction or meaning choice remains."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Our operations dashboard is too busy. Clean it up. It has twelve metrics, a dense event table, and three filters that the team uses every day.",
+      "expected_output": "A density-aware pass: preserve the metrics, table, and filters; improve grouping, hierarchy, scan paths, and visual quiet; do not delete data or hide frequently used controls to make the screen look simpler.",
+      "files": [
+        "evals/fixtures/dense-dashboard/index.html"
+      ],
+      "expectations": [
+        "The response distinguishes density from complexity instead of treating busyness as too much data.",
+        "All twelve metrics, the event table, and the three daily filters remain available.",
+        "The fix uses grouping, hierarchy, alignment, or progressive disclosure rather than deletion.",
+        "The primary \"New incident\" action stays unmistakable even though it combines fill, contrast, and weight.",
+        "The response verifies that the primary monitoring task is still fast to scan.",
+        "The response does not apply a uniform cut or hide functionality to create empty space."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Build a new analytics dashboard for my SaaS from scratch. I want a modern dark theme with charts, a sidebar, and a settings area.",
+      "expected_output": "A near-miss trigger case: this is greenfield creation, so the refactor-ui skill should not drive the task. The response should treat it as a build or design-direction task, not a feedback-driven revision.",
+      "files": [],
+      "expectations": [
+        "The refactor-ui skill does not trigger for this prompt by description alone.",
+        "The task is treated as new UI creation or direction exploration.",
+        "No baseline or existing-artifact diagnosis is invented.",
+        "No refactor loop is applied to a nonexistent artifact."
+      ]
+    }
+  ]
+}
