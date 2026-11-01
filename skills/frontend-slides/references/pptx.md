@@ -1,7 +1,9 @@
-# PPT / PPTX conversion
+# PPT / PPTX → HTML
 
-Use this branch when the user supplies a `.pptx` file. The presentation style,
-brief, generation, and verification steps still come from `SKILL.md`.
+Use this branch when the user supplies a `.pptx` file for conversion to HTML.
+For HTML → editable PPTX, use [editable-pptx.md](editable-pptx.md) instead.
+The presentation style, brief, generation, and verification steps still come
+from `SKILL.md`.
 
 ## 1. Extract
 

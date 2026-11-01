@@ -63,5 +63,15 @@
     "query": "Here is our finished deck. Can you share it with the team?",
     "should_trigger": false,
     "source": "ambiguous share request; clarify before invoking deployment"
+  },
+  {
+    "query": "把现有 ./deck/index.html 转成可编辑 PPTX，文字、卡片和时间轴都要能改，照片请用 assets 里的原图。",
+    "should_trigger": true,
+    "source": "derived from evals.json #14"
+  },
+  {
+    "query": "做一份中文 HTML 幻灯片，同时交付可编辑的 PowerPoint，沿用我们已经选定的视觉方向。",
+    "should_trigger": true,
+    "source": "extra positive: dual-format authoring"
   }
 ]

@@ -1,7 +1,7 @@
 ---
 name: frontend-slides
-description: Create, convert, or revise browser-based 16:9 HTML slide decks, including PPT/PPTX conversion, Chinese/CJK typography, and PDF export. Use when the user asks for a presentation, slide deck, pitch or talk slides, or wants an existing HTML deck changed. Not for ordinary websites, landing pages, written documents, or summarizing an existing presentation.
-argument-hint: "[deck request, .pptx path, or existing HTML deck]"
+description: Create or revise browser-based 16:9 slide decks, convert PPT/PPTX to HTML, or export an HTML deck to PDF or editable PPTX. Use for presentation creation, revision, and conversion, including Chinese/CJK decks. Not for ordinary websites, landing pages, written documents, or summarizing an existing presentation.
+argument-hint: "[deck request, .pptx input, or HTML deck + target format]"
 ---
 
 # /frontend-slides
@@ -26,10 +26,11 @@ All paths in this skill are relative to **this skill directory**. Resolve that d
 
 ## 1. Classify the request
 
-- **New deck** — create from the brief in steps 2–4.
-- **PPT/PPTX conversion** — extract first; use [references/pptx.md](references/pptx.md), then continue with steps 2–4.
+- **New deck** — create from the brief in steps 2–4. If editable PPTX is also requested, read [references/editable-pptx.md](references/editable-pptx.md) before authoring.
+- **PPT/PPTX → HTML** — extract first; use [references/pptx.md](references/pptx.md), then continue with steps 2–4.
 - **Revise an existing HTML deck** — read the deck and its assets before editing; follow "Changing an existing deck" below.
-- **Export only** — go straight to [references/pdf.md](references/pdf.md).
+- **HTML → editable PPTX** — use [references/editable-pptx.md](references/editable-pptx.md) directly; preserve the existing design. This is an external-tool workflow, not a bundled exporter. Verify visual fidelity and native-object editability separately, and disclose any fallback images.
+- **HTML → PDF** — go straight to [references/pdf.md](references/pdf.md).
 - **Share or publish** — only when the user explicitly asks; use [references/deploy.md](references/deploy.md).
 
 Reuse every fact the user already supplied: topic, audience, length, content, language, visual direction, and file path. Do not ask again. Ask one compact batch only for facts that block the work.
@@ -215,7 +216,9 @@ If the change replaces the visual direction rather than preserving it, run step 
 | [html-template.md](html-template.md) | HTML structure, controller, editor, export contract | every generation |
 | [animation-patterns.md](animation-patterns.md) | Animation snippets and effect-to-feeling guide | when motion matters |
 | [references/design-review.md](references/design-review.md) | Image truth, page composition, decoration, and whole-deck checks | every delivery; image-heavy decks and generic/AI-look feedback |
-| [references/pptx.md](references/pptx.md) | PPTX extraction and conversion | PPT/PPTX input |
+| [references/pptx.md](references/pptx.md) | PPTX → HTML extraction and conversion | PPT/PPTX input |
+| [references/editable-pptx.md](references/editable-pptx.md) | HTML → editable PPTX workflow and two-axis acceptance | editable PPTX output requested; before authoring a dual-format deck |
+| [references/pptx-troubleshooting.md](references/pptx-troubleshooting.md) | Representation-based diagnosis and known conversion pitfalls | HTML → PPTX pilot or audit finds a mismatch |
 | [references/pdf.md](references/pdf.md) | Screenshot-based PDF export | PDF requested |
 | [references/deploy.md](references/deploy.md) | Public sharing checklist | user explicitly asks to publish |
 | [UPSTREAM.md](UPSTREAM.md) | Pinned upstream commit, imported scope, local changes | maintenance and upgrades |

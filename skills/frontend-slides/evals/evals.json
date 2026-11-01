@@ -176,6 +176,64 @@
         "It re-renders and inspects the deck after the change.",
         "It separates content errors from design problems when both are present."
       ]
+    },
+    {
+      "id": 14,
+      "prompt": "我有一份已经定稿的 36 页 HTML deck，要给同事可编辑的 PPTX。文字、卡片、时间轴和表格都要能改，照片和 logo 在 assets/，风格不要变。先说明你会如何转换和验收，不要开始安装工具。",
+      "expected_output": "An export-only plan using the editable-PPTX reference, external-tool discovery, native-first representations, representative-page proof, and separate visual and editability acceptance without redesigning the deck or installing anything.",
+      "files": [],
+      "expectations": [
+        "It reads references/editable-pptx.md and routes HTML to editable PPTX, not PPTX extraction or PDF export.",
+        "It preserves the supplied design and editing requirements without repeating the presentation brief or style exploration.",
+        "It identifies the exporter as an external tool and checks its actual revision, behavior, dependencies, and renderer rather than implying a bundled exporter.",
+        "It prioritizes native text, shapes/lines, and the requested editable tables, with source pictures for photos/logos.",
+        "It proposes a pilot covering risky representations before converting all pages.",
+        "It checks the actual converter view against ?export=1, window.deck readiness/activation, hidden editor chrome, and one stage coordinate mapping.",
+        "It requires separate visual and structural acceptance, explicit fallback reporting, and representative application-level edit tests when available.",
+        "It does not install tools or promise fully editable output without evidence."
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "帮我判断这份 HTML→PPTX 的交付说明能不能成立：工具文档说 img 直嵌原图，但实际代码是 page.locator(img).screenshot() 然后 add_picture(png)。SVG 也截图成 PNG。照片里已经能看到图注，PPT 上还有一个同文的原生文本框。英文副标题和时间轴改成了 SVG。代理说“36/36 视觉通过，因此全部可编辑，assets 原图都用了”。先分析这些证据，不用转文件。",
+      "expected_output": "An evidence-based rejection of the full-editability and original-asset claims, diagnosing baked-caption duplication and classifying SVG-to-PNG workarounds as losses of editing capability.",
+      "files": [],
+      "expectations": [
+        "It does not accept a visual pass as proof that all objects are editable.",
+        "It identifies the PNG-backed SVG labels and timeline as pictures, not native editable text or geometry.",
+        "It does not infer original image embedding from img tags or the support document when actual code captures screenshots.",
+        "It distinguishes one native caption record from a second caption baked into the picture and does not require duplicate text records to explain ghosting.",
+        "It proposes inspecting embedded media/relationships, source asset identity or re-encoding evidence, and final object representations.",
+        "It asks for a native route or explicit user agreement for required-editability losses rather than silently accepting the workaround."
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "HTML→PPTX 已经生成文件，退出码是 0，但日志里显示找不到 LibreOffice/PowerPoint，字体解析失败后继续，也没有 compare 图。当前代理看不了图片。我想尽快交付，不过还没同意安装软件或接受未验证稿。下一步怎么办？",
+      "expected_output": "A truthful blocked-verification response that separates file production, structural checks, visual checks, and target-viewer editing, and asks for a renderer or agreement to an unverified draft without silently installing software.",
+      "files": [],
+      "expectations": [
+        "It states that a file and exit code zero do not establish visual, font, or editing acceptance.",
+        "It offers renderer setup with consent, verification on another machine, or an explicitly unverified draft requiring agreement.",
+        "It does not silently install fonts/software, change system configuration, or download a browser.",
+        "It proposes an image-capable reviewer with capability verified first, or human inspection, rather than claiming inaccessible images were reviewed.",
+        "It distinguishes possible structural checks from missing renders and from unverified PowerPoint/WPS editing behavior.",
+        "It retains warnings and evidence rather than cleaning up before the acceptance decision."
+      ]
+    },
+    {
+      "id": 17,
+      "prompt": "同一个副标题截断已经连续两轮。HTML 舞台是 1920×1080，浏览器视口 1280×720；改宽 CSS 后 PPT XML 里文本框仍只有预期宽度的 2/3。细体数字也变粗了。是不是应该把它们转成 SVG，或者按两轮 sticky 规则直接算 OOXML 边界？这次只讨论排查，不维护转换器。",
+      "expected_output": "A targeted diagnosis plan that checks actual measurement/coordinate/textbox/font evidence, avoids declaring universal format limits or hiding the defects in rasterized SVG, and stays within external-tool workflow scope.",
+      "files": [],
+      "expectations": [
+        "It treats the repeated finding as a reason to diagnose rather than automatic acceptance or proof of a format limitation.",
+        "It checks stage scale/translation, measured bounds, textbox extents/insets, and units before another CSS-width guess; the ratio is a clue, not conclusive proof.",
+        "It checks requested font weight, resolved/embedded font instances, typeface mapping, and renderer availability before asserting PPT cannot express thin weights.",
+        "It classifies an SVG workaround according to the actual converter path and seeks agreement if it loses required text editing.",
+        "It checks reused working copies and cached evidence, and invalidates all affected pages after global or tool changes.",
+        "It offers a supported alternative or reports a blocker rather than starting a maintained converter fork or silently weakening the requirement."
+      ]
     }
   ]
 }

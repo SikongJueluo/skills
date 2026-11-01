@@ -53,6 +53,10 @@ contract, Chinese text handling, and execution safety.
   behavior changes, not consolidation.
 - `references/design-review.md` — new local reference for image truth, page
   composition, decoration audits, whole-deck review, and generic-feel diagnosis.
+- `references/editable-pptx.md` and `references/pptx-troubleshooting.md` — local
+  operating references distilled from an HTML-to-PPTX conversion case. They add
+  external-tool discovery, export-state checks, and separate visual/editability
+  acceptance; no converter code or case-specific patches are imported.
 - `html-template.md` — export/edit contract made concrete, image sizing fixed
   to the 1920×1080 stage, unsupported "fully self-contained" claims corrected.
 - `viewport-base.css` — export freeze helper and printing fixes; the stage,
@@ -69,7 +73,8 @@ contract, Chinese text handling, and execution safety.
 - `LICENSE` — carries both upstream copyright notices for the imported skill and
   design systems.
 - `evals/` — new for this repository; includes direction-gate, explicit
-  delegation, image-truth, audience/speaker, and generic-feel cases.
+  delegation, image-truth, audience/speaker, generic-feel, and editable-PPTX
+  workflow cases.
 
 `STYLE_PRESETS.md`, `animation-patterns.md`, `bold-template-pack/selection-index.json`,
 and all 34 `preview.md` / `design.md` pairs are verbatim copies from the pinned

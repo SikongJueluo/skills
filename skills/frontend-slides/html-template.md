@@ -560,7 +560,9 @@ authored size.
 ## Export contract
 
 The PDF exporter and any browser automation use this contract instead of
-guessing at layout:
+guessing at layout. For editable PPTX, use the [conversion reference](references/editable-pptx.md);
+an external converter must be checked or adapted to consume this state, not
+assumed to honor it:
 
 - Loading with `?export=1` adds `is-exporting` before first paint. CSS freezes
   entrance transitions; the deck starts on slide 1 regardless of the hash.
