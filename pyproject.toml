@@ -1,0 +1,19 @@
+[project]
+name = "skills-evals"
+version = "0.1.0"
+description = "Inspect AI evaluations for this skill collection, running containerized tools in Podman."
+requires-python = ">=3.11"
+dependencies = [
+    "inspect-ai>=0.3.163",
+    "inspect-podman>=0.1.2",
+    "openai>=1.99.0",
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+# The repository ships Markdown skills and helper scripts, not an installable
+# package. Declaring this keeps `uv sync` from trying to build a wheel.
+[tool.uv]
+package = false

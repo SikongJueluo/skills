@@ -1,0 +1,18 @@
+services:
+  default:
+    image: docker.io/library/python:3.12-slim
+    x-local: true
+    init: true
+    command: ["sh", "-c", "mkdir -p /skill && exec sleep infinity"]
+    cpus: 1.0
+    mem_limit: 1gb
+    network_mode: none
+  verifier:
+    image: localhost/skills-ui-verifier:playwright-1.58.0
+    x-local: true
+    init: true
+    command: ["sleep", "infinity"]
+    cpus: 1.0
+    mem_limit: 2gb
+    shm_size: 256m
+    network_mode: none

@@ -2,3 +2,4 @@
 .dsh/
 .pi/
 AGENTS.md
+__pycache__/

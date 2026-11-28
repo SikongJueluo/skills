@@ -1,0 +1,19 @@
+# Sandbox for the skill-behavior eval. Tool calls (shell, file reads) run in
+# here through `sandbox()`; model requests do not.
+#
+# `x-local` keeps Podman from pulling: the image must already be in the local
+# store. python:3.12-slim ships GNU tar, which Inspect needs for read_file.
+#
+# The command creates /skill before sleeping, so every condition (`none`
+# included) has the directory the tools use as their working directory. It is
+# not set as Compose `working_dir`, because Podman would chdir into it before
+# the command could create it.
+services:
+  default:
+    image: docker.io/library/python:3.12-slim
+    x-local: true
+    init: true
+    command: ["sh", "-c", "mkdir -p /skill && exec sleep infinity"]
+    cpus: 1.0
+    mem_limit: 1gb
+    network_mode: none
