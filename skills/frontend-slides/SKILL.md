@@ -18,9 +18,9 @@ All paths in this skill are relative to **this skill directory**. Resolve that d
 ## Non-negotiables
 
 - **Fixed stage.** Every slide is authored at 1920×1080 inside one stage that scales uniformly. Letterbox or pillarbox on other aspect ratios; never reflow slide content for phones.
-- **Visibility contract.** Switch slides with `.active` / `.visible` on `.slide`; never `display: none` for slide switching. Include the full contents of [viewport-base.css](viewport-base.css) in every generated deck.
+- **Visibility contract.** Switch slides with `.active` / `.visible` on `.slide`; never use `display: none` for slide switching. Include the full contents of [viewport-base.css](viewport-base.css) in every generated deck.
 - **One runtime.** Generated decks use the inline controller in [html-template.md](html-template.md). Do not mix in a second navigation component or a second stage scaler.
-- **No build step.** CSS and JS stay inline in the HTML. Images normally live in `assets/`; only inline them when the user asks for a portable single file.
+- **No build step.** CSS and JS stay inline in the HTML. Images normally live in `assets/`; inline them only when the user asks for a portable single file.
 - **Progressive disclosure.** Read `selection-index.json` before template metadata, `preview.md` before a full `design.md`, and exactly one selected `design.md` when generating.
 - **Honest delivery.** Do not claim a browser, screenshot, PDF, or deployment was verified unless it was.
 
@@ -39,16 +39,16 @@ Reuse every fact the user already supplied: topic, audience, length, content, la
 
 Ask in one message, with numbered choices when no structured question UI is available:
 
-1. **Purpose and audience** — pitch, teaching, conference, internal review, etc.
+1. **Purpose and audience** — pitch, teaching, conference, internal review, and so on.
 2. **Length** — short 5–10, medium 10–20, long 20+ slides.
 3. **Content** — ready, rough notes, or topic only. Ask the user to share the material.
-4. **Density** — low-density/speaker-led or high-density/reading-first.
-5. **Language** — only if the deck language is not obvious from the request.
-6. **Images** — only if the request mentions or supplies them.
+4. **Density** — low-density/speaker-led, or high-density/reading-first.
+5. **Language** — only when the deck language cannot be judged from the request.
+6. **Images** — only when the request mentions or supplies them.
 
 Never ask about inline editing before a draft exists. Include it by default; omit it only when the user asks for a locked or export-only file.
 
-Default the output to `./<deck-slug>/index.html` plus `assets/` unless the user named a path. Completion: mode, output path, content, density, and language are known.
+Default the output to `./<deck-slug>/index.html` plus `assets/` unless the user named a path. Completion: mode, output path, content, density, and language are all known.
 
 ## 3. Choose the direction
 
@@ -56,7 +56,7 @@ A constraint is not a choice. "Light background, dark text, large type" can shap
 
 Generate without a preview round only when the user:
 
-- names a preset, template, reference deck, or visual direction, and asks to use it — use it and say which;
+- names a preset, template, reference deck, or visual direction, and asks to use it — use it, and say which one;
 - already chose a direction in this conversation or in the supplied material;
 - delegates the choice ("you decide", "no need to ask").
 
@@ -67,8 +67,8 @@ For exploration:
 1. Read [STYLE_PRESETS.md](STYLE_PRESETS.md) and the metadata in [bold-template-pack/selection-index.json](bold-template-pack/selection-index.json).
 2. Shortlist 2–4 candidates matched to occasion, audience, content, density, and any stated constraints. Read only those candidates' `preview.md`. Use volunteered taste (a reference, a disliked look, a brand rule) to shape the shortlist, not as a substitute for a choice.
 3. Build three genuinely different title slides with the deck's real title and subtitle: one safe preset, one bold template, one wildcard (another bold template or a custom design). When the material supports only two distinct directions, build two. They must be different design ideas, not one idea in three colors.
-4. Save them under `<deck>/.previews/` as `style-a.html`, `style-b.html`, `style-c.html`. Show them with the agent's browser/image/file-present capability; if none exists, deliver the paths and ask the user to open them.
-5. Ask which direction to use. If "mix", ask what to combine.
+4. Save them under `<deck>/.previews/` as `style-a.html`, `style-b.html`, `style-c.html`. Show them with the agent's browser/image/file-present capability; if none exists, give the paths and ask the user to open them.
+5. Ask which direction to use. If the answer is "mix", ask what to combine.
 
 Preview rules:
 
@@ -90,7 +90,7 @@ Read these before writing HTML:
 - [viewport-base.css](viewport-base.css) — paste it in full into `<style>`.
 - [html-template.md](html-template.md) — structure, controller, editing, export contract.
 - [animation-patterns.md](animation-patterns.md) — only the patterns that fit the chosen direction.
-- The selected bold template's `design.md` — exactly one, only after selection.
+- The selected bold template's `design.md` — exactly one, and only after selection.
 - [references/design-review.md](references/design-review.md) — image truth, page composition, and whole-deck review. Read the image and composition sections before placing assets, and the whole file before delivery.
 
 For a `design.md`, treat `vw`, `vh`, and `clamp()` as design proportions to translate into 1920×1080 coordinates. Preserve its fonts, palette, decorative vocabulary, spacing rhythm, and component grammar; do not copy demo content. Generate the same visual system for every slide type the deck needs.
@@ -108,13 +108,13 @@ Split into another slide instead of shrinking text or letting panels overlap.
 
 - Use only facts, numbers, quotes, and examples from the supplied material or a cited source. Do not fill gaps with plausible detail; mark an inference as one or cut it.
 - An example must demonstrate the claim beside it. If the image or example shows something else, change the example or the claim.
-- Open every image you place and describe what it actually shows. Match the caption and alt text to that description. A filename, search result, or your own alt text is not inspection.
+- Open every image you place and describe what it actually shows. Match the caption and alt text to that description. A filename, a search result, or your own alt text is not an inspection.
 - If you cannot view images, delegate the check to an agent that can, or ask the user. If neither is available, report the image check as unverified. Do not claim an image was verified from metadata.
 
 ### Compose for the audience
 
 - Give each slide one job and one focal point. When a title, claim, explanation, image, speaker prompt, and conclusion all compete, split the slide or cut.
-- Decoration must do a content or structural job. Repeated frames, labels, numbers, chips, and rules that would fit any deck are template habit, not design.
+- Decoration must do a content or structural job. Repeated frames, labels, numbers, chips, and rules that would hold in any deck are template habit, not design.
 - The slide surface belongs to the audience. Put talk track, timing, facilitation prompts, and reminders in HTML comments or a separate notes file, not in visible chrome, unless the user asked for a teaching handout that shows them.
 - The closing slide makes one closing move. Do not pile summary, quote, call to action, and thanks onto it.
 
@@ -124,13 +124,13 @@ Split into another slide instead of shrinking text or letting panels overlap.
 - Use a distinctive Latin display face if the design calls for one, but always provide a CJK stack, for example `"Noto Sans SC", "Source Han Sans SC", "LXGW WenKai", sans-serif` or `"Noto Serif SC", "Source Han Serif SC", "Songti SC", serif`.
 - CJK runs get `letter-spacing: 0`. If a design uses negative tracking for Latin display type, scope it to a Latin-only class; never apply it to Chinese.
 - Use generous line height: about `1.7–1.9` for body text and `1.2–1.35` for headings. Avoid weight 300 for small Chinese text and avoid faux bold/italic.
-- Do not uppercase or italicize Chinese text. Use Chinese punctuation in Chinese sentences and keep mixed CJK/Latin spacing readable.
+- Do not apply uppercase transforms or italics to Chinese text. Use Chinese punctuation in Chinese sentences and keep mixed CJK/Latin spacing readable.
 - Keep body text at roughly 24px or larger on the 1920×1080 stage; table and caption text at roughly 22px or larger. Split the slide if that does not fit.
 - Add `overflow-wrap: anywhere` for long URLs and mixed tokens, then check actual line breaks in a rendered screenshot.
 
 ### Output contract
 
-- `index.html` with CSS/JS inline; `assets/` for images unless the user asks for one portable file.
+- `index.html` with CSS/JS inline; images in `assets/` unless the user asks for a portable single file.
 - Include the full viewport CSS, the export contract (`?export=1` and `window.deck`), and the inline editor by default.
 - Remote fonts are allowed. Tell the user that a deck relying on Fontshare/Google Fonts may fall back when offline; only claim a portable/offline file after inlining the required resources and checking for remaining external references.
 - No placeholder text, lorem ipsum, empty sections, or broken image paths.
@@ -168,7 +168,7 @@ node scripts/export-pdf.mjs <deck>/index.html --png-dir /tmp/deck-shots --viewpo
 node scripts/export-pdf.mjs <deck>/index.html --png-dir /tmp/deck-phone --viewport 390x844
 ```
 
-Inspect the PNGs — actually look at them, not just at file sizes. Then check:
+Inspect these PNGs — actually look at them, not just at file sizes. Then check:
 
 - The stage stays 16:9 and scales uniformly; the phone view letterboxes instead of reflowing.
 - No clipped headings, overflowing cards, overlapping panels, or text below comfortable size.
@@ -181,7 +181,7 @@ Inspect the PNGs — actually look at them, not just at file sizes. Then check:
   If you test it, move the download into the deck folder next to `assets/`
   before reopening; a copy left in Downloads cannot load the deck's images.
 
-If no browser or screenshot capability exists, say exactly that and report which checks remain unverified.
+If no browser or screenshot capability exists, say so honestly and report which checks remain unverified.
 
 Completion: all three passes are complete; every slide is inspected at desktop and phone sizes, every image opened, and any check that could not be performed is named.
 

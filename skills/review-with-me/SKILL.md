@@ -1,131 +1,131 @@
 ---
 name: review-with-me
-description: Curate the code worth a human's attention and present it in reviewable slices.
+description: Curate the code worth a human's attention and present it as reviewable slices.
 disable-model-invocation: true
-argument-hint: "<review scope: commits, revset, branch, bookmark, or natural language>"
+argument-hint: "<review scope: commit, revset, branch, bookmark, or natural-language description>"
 ---
 
 # /review-with-me
 
-Prepare a **human code review**, not another agent findings report. The agent investigates the full change, then puts the load-bearing code in front of the human with enough context to judge it without navigating the repository.
+Prepare a **human code review**, not another agent findings report. The agent investigates the whole change, then lays the load-bearing code in front of the human with enough context for them to decide without hopping around the repository.
 
-This skill records human judgments; it does not issue a merge verdict.
+This skill records human judgment; it does not issue a merge verdict.
 
 ## Scope
 
-Accept a natural-language scope, commit IDs, branches/bookmarks, or a revset. Resolve it precisely and restate:
+Accept a natural-language scope, commit id, branch/bookmark, or revset. Resolve it precisely and restate:
 
 - VCS
-- normalized range
+- the normalized scope
 - whether the working copy is included
-- the net effect being reviewed
+- the net effect under review
 
-When `.jj/` exists, use Jujutsu as the source of truth and follow the `jujutsu` skill; otherwise use Git. Ask for confirmation when the interpretation is ambiguous. If no scope was supplied, ask once and offer likely ranges as shortcuts.
+When `.jj/` exists, treat Jujutsu as the source of truth and follow the `jujutsu` skill; otherwise use Git. When resolution is ambiguous, ask the human to confirm. If no scope is given, ask once and offer plausible scopes as shortcuts.
 
-Version 1 reviews a contiguous range, including the working copy when requested. For a disconnected commit set, ask the human to choose separate reviews or a contiguous boundary. Review the final net effect first; inspect commit evolution only to recover intent or locate a change.
+Version 1 reviews contiguous ranges, including the working copy when asked. For a discrete set of commits, ask the human to choose between split reviews or a contiguous boundary. Prefer reviewing the final net effect; inspect commit evolution only when needed to recover intent or locate changes.
 
-The range limits what is judged, not where evidence may come from. Read relevant existing code, tests, documentation, callers, and commit descriptions, while reporting only matters introduced, exposed, or changed by the range.
+The scope bounds what is judged, not where evidence may come from. Read relevant existing code, tests, docs, callers, and commit descriptions, but report only what this scope introduces, exposes, or changes.
 
-## Plan the review
+## Planning the review
 
-Understand every material behavior and boundary, using these lenses as prompts rather than a fixed checklist:
+Understand each substantive behavior and boundary, treating these perspectives as prompts rather than a fixed checklist:
 
-- data structures, state, and contracts
-- data flow, state transitions, and lifecycle
-- algorithms, control flow, and failure paths
-- external interfaces, system boundaries, and side effects
-- overall risks and omissions
+- Data structures, state, and contracts
+- Data flow, state transitions, and lifecycle
+- Algorithms, control flow, and failure paths
+- External interfaces, system boundaries, and side effects
+- Overall risk and omissions
 
-Choose only the lenses that help explain this change, and order them by comprehension dependency. For a broad or unfamiliar change, show the human a short review map before the slices; for a focused change, a brief orientation can lead directly into the first slice. Mention a skipped lens only when its absence is useful evidence, not as bookkeeping.
+Choose only the perspectives that help explain this change, and order them by dependency of understanding. For a broad or unfamiliar change, give the human a short review map before slicing; for a focused change, a brief orientation can lead straight into the first slice. Mention a perspective only when its absence is itself useful evidence, never as bookkeeping.
 
-## Build review slices
+## Building review slices
 
-Within the chosen review path, select the **load-bearing code** where a human's independent reading has value, especially:
+Within the chosen review path, pick the **load-bearing code whose independent reading is valuable to a human**, especially:
 
-- domain policy and user-visible behavior
-- control flow, failure handling, and irreversible effects
-- ownership, lifecycle, and trust boundaries
-- public contracts and abstractions that shape future changes
-- surprising implementation choices or assumptions
-- consequential issues found by the agent
+- Domain policy and user-visible behavior
+- Control flow, failure handling, and irreversible effects
+- Ownership, lifecycle, and trust boundaries
+- Public contracts and abstractions that shape future changes
+- Surprising implementation choices or assumptions
+- Consequential problems the agent found
 
-Present each selection as one of three review slices:
+Present each selection as one of three kinds of review slice:
 
-- **Verify** — the agent thinks it is sound; the human independently checks the critical implementation.
-- **Problem** — the agent found a consequential issue; the human sees the claim beside its evidence.
-- **Decision** — correctness depends on intent, taste, local knowledge, trade-offs, or responsibility.
+- **Verify** — the agent believes it is sound; the human independently verifies the key implementation.
+- **Problem** — the agent found a consequential problem; the human sees that claim beside the evidence.
+- **Decision** — correctness depends on intent, taste, local knowledge, trade-offs, or ownership.
 
-Fold mechanical edits, repetition, generated code, and local declarations that carry no behavior or boundary. A declaration or data shape that defines a contract is load-bearing, not mechanical. Any range containing a non-mechanical change must produce at least one slice. Zero slices is allowed only when the entire range is mechanical, and the response must explain why.
+Fold away mechanical changes, repetition, generated code, and local declarations that carry no behavior or boundary. Declarations or data shapes that define contracts are load-bearing, not mechanical. Any scope containing non-mechanical changes must produce at least one slice. Zero slices are permitted only when the entire scope is mechanical, and the response must explain why.
 
 ## Make each slice self-contained
 
-Use this compact shape, adapting labels when useful:
+Use this compact shape, adjusting labels when needed:
 
 ````markdown
 ### [Verify | Problem | Decision] <what this code controls>
 
 **What happens:** <the behavior this code implements, in plain words>
-**Why it matters:** <what is at stake if it is wrong>
+**Why it matters:** <what it costs if this is wrong>
 
 ```<language>
-<short excerpt of the consequential code>
+<a short excerpt of the consequential code>
 // REVIEW ①
 ```
 
-**Review:** <the concrete thing for the human to check or decide>
-**Agent take:** <answer> — <the concrete cause or failure scenario>
+**Review:** <the specific thing for the human to check or decide>
+**Agent take:** <the answer> — <the concrete cause or failure scenario>
 Source: `<path:start-end>`
 
-① <detailed explanation of the marked line or branch, below the block>
+① <a detailed explanation of the marked line or branch, below the code block>
 ````
 
-Keep code blocks short. Mark the consequential lines with bare numbered markers such as `// REVIEW ①`, and put every detailed explanation below the block under the matching number. Prefer a marker on its own line; move it to the end of a line only when that does not widen the excerpt. Rewrap or reindent an excerpt for display only when the result stays semantically identical, and say so; the Source location still names the real position.
+Keep code blocks short. Mark consequential lines with a bare number such as `// REVIEW ①`, and put each detailed explanation below the code block at its number. Prefer the marker on its own line; move it to end of line only when that does not widen the excerpt. Rewrap or reindent the excerpt for presentation only when the resulting semantics are identical, and say that you did; the Source location still points at the real location.
 
-Quote the code directly in the response. Add `REVIEW` markers only to the quoted copy, never to project files. Preserve enough surrounding control flow, inputs, and outcomes to make the question answerable. Show a cross-file flow inside one slice with several short blocks tracing input → transform → output or side effect, each carrying its own markers; a merged excerpt that hides the contract is worse than three small ones. A source location supports the slice—it never substitutes for showing the code.
+Quote code directly in the response. Add `REVIEW` markers only to the quoted copy, never to project files. Keep enough surrounding control flow, inputs, and results that the question can be answered. Present cross-file flows within one slice as several short code blocks tracing input → transformation → output or side effect, each carrying its own marker; a merged excerpt that hides the contract is worse than three small excerpts. The source location supports the slice — it can never replace showing the code.
 
-Expose uncertainty plainly. Say when no reliable agent take exists. Include a major consequence or unknown only when it changes the judgment.
+Expose uncertainty candidly. Say plainly when there is no reliable agent judgment. Include only the consequential risks or unknowns that would change a judgment.
 
 ## Explain for an unfamiliar reader
 
-Assume by default that the human reads the language fluently but does not know this module or its domain; the four plain fields exist for that reader.
+Assume the human reads this language fluently but does not know the module or its domain; the four plain fields exist for that reader.
 
-- Explain a module or domain term in place the first time it appears; do not send the human elsewhere for vocabulary.
-- Write What happens as the behavior the code implements, not the pattern name it resembles.
-- Ground the Agent take in a concrete cause and failure scenario—what breaks, and along which path—never a restatement of abstract nouns.
-- For a data-flow slice, state the input → processing → output/side-effect trace explicitly, not only implicitly through the blocks.
-- For a complex algorithm, walk one concrete step-by-step example with real values instead of describing the steps abstractly.
+- Explain module or domain terms in place the first time they appear; do not send the human elsewhere to look up vocabulary.
+- Write What happens as the behavior the code implements, not the name of a pattern it resembles.
+- Ground Agent take in concrete causes and failure scenarios — what breaks, along which path — and never restate abstract nouns.
+- For data-flow slices, state the input → processing → output/side-effect trace explicitly rather than conveying it only through code blocks.
+- For complex algorithms, walk a concrete step-by-step example with real values instead of describing the steps abstractly.
 
-When the human signals familiarity with the module or the concern, keep the fields terse for that slice and expand again on request. Teaching stays scoped to reviewing the slice—enough to judge it, not a general lesson.
+When the human says they are already familiar with the module or the concern, write that slice's fields more briefly and expand on demand. Teaching is scoped to reviewing that slice — enough to decide, not a general course.
 
-## Run the human review
+## Conducting the human review
 
-Open with a short orientation: what the range changes, its observable behavior, assumptions the code cannot confirm, and what the agent checked. Use rounds when they reduce cognitive load, not to satisfy a fixed ceremony.
+Open with a short orientation: what this scope changed, its observable behavior, assumptions the code cannot confirm, and what the agent checked. Use rounds when they reduce cognitive load, not to satisfy a fixed ritual.
 
-- Keep each round coherent. It may follow one lens or combine tightly coupled lenses, and it may contain as many slices as the human can reasonably judge together.
-- Pause when the human needs to make a judgment, when the next material depends on that judgment, or when the response would become hard to review. Otherwise continue without inventing a checkpoint.
-- When work remains, end with a terse conclusion and say what comes next. Use a progress ledger only when several rounds or deferred decisions make progress unclear.
-- Accept natural responses: looks right, concern confirmed, choose differently, explain more, inspect more context, or defer.
-- Surface a consequential problem as soon as it matters, then reshape the remaining review around the human's response.
-- Recompute the remaining review after each response; a changed premise may reopen slices or reorder the path.
+- Keep each round coherent. It may follow one perspective or a tight cluster of perspectives, and may contain any number of slices the human can reasonably judge together.
+- Pause when the human needs to make a judgment, when the next material depends on that judgment, or when the response would become hard to review. Otherwise continue; do not invent checkpoints.
+- When work remains, close with a short conclusion and say what is next. Use a progress ledger only when multiple rounds or deferred decisions make progress unclear.
+- Accept natural responses: looks right, concern confirmed, choose another option, explain more, show more context, or defer.
+- Raise a consequential problem as soon as it becomes important, then reshape the remaining review around the human's response.
+- Recompute the remaining review after each response; changed premises may reopen slices or reorder the path.
 
-Integrate consequential agent findings into **Problem** slices instead of placing them in a separate findings dump. Summarize only these outside slices:
+Integrate the agent's consequential findings into **Problem** slices rather than a separate findings list. Summarize outside slices only:
 
-- mechanical issues already fixed and verified
-- authorization status and required action; any consequential problem itself still appears in a Problem slice
-- repeated instances represented by one slice
-- folded material, by reason and count
+- Mechanical problems fixed and verified
+- Authorization state and required actions; any consequential problem itself still appears in a Problem slice
+- Repeated instances represented by one slice
+- Folded material, with reason and count
 
-Use Plannotator only when the human asks for broader visual inspection and it can show exactly the normalized range; state the limitation when it cannot.
+Use Plannotator only when the human asks for a broader visual pass and Plannotator can display the normalized scope precisely; when it cannot, state that limitation.
 
-## Closure
+## Closing
 
-Maintain a concise record of reviewed slices:
+Maintain a short record of reviewed slices:
 
-- accepted implementations
-- confirmed problems and required changes
-- human decisions
-- accepted or deferred risks, including what they block
+- Accepted implementations
+- Confirmed problems and required changes
+- The human's decisions
+- Accepted or deferred risks, including what they block
 
-When code changes, rerun relevant checks, review the resulting net effect, and reopen slices whose premises changed. Renormalize the scope when its boundary changes.
+When code changes, rerun the relevant checks, review the resulting net effect, and reopen slices whose premises changed. Renormalize the scope when its boundary moves.
 
-The review is complete when every material behavior or boundary is represented by a reviewed slice or an explicit mechanical folded category; every non-mechanical range has at least one slice; each slice is accepted, redirected, or deferred; required agent work is handled or recorded; and the scope remains valid. If a judgment creates a durable architectural constraint, public API commitment, accepted risk, or maintenance trade-off, ask once at the end whether to persist it in an issue or documentation.
+The review is complete when every substantive behavior or boundary is represented by a reviewed slice or an explicit mechanical-fold category; every non-mechanical scope has at least one slice; every slice has been accepted, redirected, or deferred; the required agent work is handled or recorded; and the scope is still valid. If a judgment forms a lasting architectural constraint, public API commitment, accepted risk, or maintenance trade-off, ask once at the end whether to persist it in an issue or document.

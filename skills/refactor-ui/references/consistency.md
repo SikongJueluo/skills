@@ -1,82 +1,82 @@
 # Consistency: one system, not one template
 
-Consistency is a stable grammar of roles. It is not identical layouts. The test is whether the same kind of thing is treated the same way, and whether different treatments mean something.
+Consistency is a stable grammar of roles, not identical layouts. What matters: are like things treated alike, and do unlike treatments each express a different meaning?
 
-Read this file when the complaint is that the work feels inconsistent, unrelated, or like several pieces stitched together — and when the user explicitly does not want every surface to share one layout.
+Read this file when the feedback says the work is inconsistent, feels like unrelated pieces stitched together, or when the user explicitly does not want every screen to share one layout.
 
 ## 1. Inventory the roles
 
-List the roles the artifact actually uses, then the treatment each one gets:
+List the roles the artifact actually uses, and how each is treated:
 
-- page or section title;
-- kicker, eyebrow, or category label;
-- body, emphasis, and supporting text;
+- page or section titles;
+- lead-ins, eyebrows, or category labels;
+- body text, emphasized text, and supporting text;
 - captions, metadata, credits;
-- navigation and progress cues;
+- navigation and progress indicators;
 - primary and secondary actions;
 - images, figures, and their frames;
-- callouts, quotes, numbers, and state labels.
+- callouts, pull quotes, numbers, and status labels.
 
-For each role, note every treatment and where it appears. The complaint usually lives in one of three places: the same role has several treatments, one treatment serves several roles, or a difference in treatment implies a meaning that is not real.
+For each role, record where it appears and every treatment it receives. Feedback usually comes from one of three situations: one role gets several treatments; one treatment carries several roles; or different treatments imply a distinction that does not actually exist.
 
 ## 2. Role → treatment → meaning
 
-- Same role, same treatment. Same treatment, same meaning.
-- A difference is legitimate when it signals a real difference: hierarchy, content type, interaction state, or narrative beat.
-- Position carries meaning. A title anchored inside the content column and a title in a full-width top band read as different ranks. If the rank is the same, choose one rule. If the difference is intentional, make the distinction systematic and visible.
-- A caption is not a label. A label is not a heading. Do not let one visual style do two jobs because it is convenient.
+- One role, one treatment; one treatment, one meaning.
+- A difference is justified only when it expresses a real distinction, such as hierarchy, content type, interaction state, or narrative beat.
+- Position carries meaning too. A title anchored inside the content column and a title placed in a full-width top bar read as different levels. At equal level, use the same rule; if the difference is intentional, make the distinction systematic and visible.
+- A caption is not a label, and a label is not a heading. Do not let one visual style carry two responsibilities for convenience.
 
-Test: point at an instance and ask what a reader would infer from its treatment. If the inference is wrong, the grammar is wrong.
+Test: point at one instance and ask what a reader would infer from its treatment. If the inference is wrong, the role grammar has a problem.
 
-## 3. Let variation earn itself
+## 3. Ground the variation
 
-- Layout follows content structure: a comparison goes side by side, a sequence becomes steps, a single claim gets one focal element, a gallery becomes a grid.
-- Alternation — image left, then right — is legitimate rhythm. It becomes a problem only when it implies a distinction that does not exist or breaks the reading order.
+- Layout follows content structure: comparisons use side-by-side, sequences use steps, a single claim uses one focal element, a gallery uses a grid.
+- Alternation — an image left, then right — can create a reasonable rhythm. It is a problem only when it implies a distinction that does not exist or breaks the reading order.
 - Different page types can share a system without sharing a template. A system is a grammar, not a straitjacket.
-- Uniformity that erases necessary differences is also inconsistency: it treats different things as the same.
+- Uniformity that erases a necessary distinction is also inconsistent: it treats unlike things as alike.
 
-Do not answer "these pages feel different" by forcing every page into one layout. Answer it by stabilizing the roles and letting structure drive the layout.
+Do not use "every page looks different" as a reason to force every page into the same layout. Stabilize the role rules, and let the content structure decide the layout.
 
-## 4. Labels are a contract
+## 4. A label is a contract
 
-- One label style, one job. If one style serves a category, a question, an explanation label, and a call to action, readers stop decoding it. Split the roles.
-- A label should add information the heading does not already carry. A label that restates the title is decoration.
-- Keep the label set small: section label, status or state, annotation. If a fourth is needed, check whether it is really a heading or body text.
-- Labels that are really actions should look like actions, not metadata.
+- One label style carries one responsibility. If the same style is used for categories, questions, explainer tags, and calls to action at once, the reader cannot decode it; split the roles.
+- A label should give information the heading does not. A label that repeats the heading's content is only decoration.
+- Keep the label set small: section labels, status labels, note labels. If you need a fourth, check whether it should actually be a heading or body text.
+- A label that is really an action should look like an action, not like metadata.
 
-## 5. Look past color tokens
+## 5. Do not check only the color tokens
 
-Token reuse does not guarantee consistency. Check:
+Reusing tokens does not guarantee consistency. Check as well:
 
-- **Type:** family, size steps, weight, case, tracking, line-height.
-- **Color:** roles — text, muted text, accent, semantic — not just shared hex values.
-- **Space:** scale, inside-versus-outside relationships, alignment edges.
-- **Shape:** radii, border weights, shadows, dividers.
-- **Media:** ratio, crop, mat or frame, caption placement, credit style.
+- **Type:** family, size scale, weight, case, letter spacing, line height.
+- **Color:** semantic roles — text, muted text, accent, semantic colors — not merely shared hex values.
+- **Space:** spacing scale, within-group versus between-group relationships, aligned edges.
+- **Shape:** corner radii, border widths, shadows, dividers.
+- **Media:** ratio, cropping, matte or frame, caption position, credit style.
 - **Interaction:** hover, focus, active, disabled, icon style, control height.
 
-Two elements can share a token and still mean different things. Two roles can use different values and still be coherent if the difference is systematic. Fix the semantic rule, not only the variable.
+Two elements can share one token and still express different meanings; two roles can use different values and still be coherent, as long as the differences are systematic. Fix the semantic rules, not just the variables.
 
-## 6. Repair within scope
+## 6. Fix within scope
 
-- Establish the role map before editing, then fix the outliers and ambiguous roles that produce the complaint.
-- Do not template every surface. Do not restyle approved variations.
-- If the artifact has no stable grammar, define the smallest one that covers its actual roles — not a full design system.
-- When a local exception carries meaning, keep it and state the rule it follows.
-- Do not turn an inferred rule into a permanent project convention. Record it only when the user adopts it.
+- Build the role map before editing, then fix the outlier treatments and ambiguous roles that produced the feedback.
+- Do not stamp a template onto every screen, and do not reset approved differentiating styles.
+- If the artifact has no stable grammar, define only the minimal rules that cover its actual roles; do not build a full design system.
+- Keep a local exception that carries meaning, and state the rule it follows.
+- Do not turn an inferred rule into a permanent project convention. Record it only after the user adopts it.
 
-## 7. Completion checks
+## 7. Completion check
 
-- Pick three instances of one role: a reader can predict the treatment.
-- Pick three different treatments: each difference has a meaning you can state.
-- The specific inconsistency in the complaint is gone; unrelated surfaces are not restyled.
-- Legitimate variation — density, layout, imagery, pacing — survives.
-- Labels each do one job.
+- Pick any three instances of the same role and a reader can predict how each is treated.
+- Pick any three different treatments and you can state the meaning of each difference.
+- The specific inconsistency raised in the feedback is gone; unrelated screens were not redesigned.
+- Reasonable variation — density, layout, imagery, rhythm — survives.
+- Every label carries one responsibility.
 
 ## Avoid
 
-- Making every page identical.
-- Using one heading size for different ranks.
-- Adding tokens while keeping conflicting semantics.
-- Fixing one instance and leaving the same role inconsistent elsewhere.
-- Calling every layout difference an inconsistency.
+- Making every page exactly the same.
+- Using one type size for headings at different levels.
+- Adding tokens while leaving conflicting semantics in place.
+- Fixing one instance while other instances of the same role stay inconsistent.
+- Calling any layout difference an inconsistency.
