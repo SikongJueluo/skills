@@ -10,6 +10,9 @@ A small collection of reusable skills for coding agents.
 - [`frontend-slides`](skills/frontend-slides/SKILL.md) — Builds and revises fixed-stage 16:9 HTML presentations, converts PPTX to HTML, and guides PDF or editable-PPTX export.
 - [`jj-describe`](skills/jj-describe/SKILL.md) — Writes and applies concise, self-contained Conventional Commits descriptions to Jujutsu commits, on request or after completing a change.
 - [`jj-desc`](skills/jj-desc/SKILL.md) — Provides a user-invoked alias that starts a `jj-describe` session.
+- [`loop-discuss`](skills/loop-discuss/SKILL.md) — Cuts a vague idea down to the current minimum closed loop, fixes its endpoint and acceptance, and emits a contract that can be followed as written. Covers only this loop, not the whole design.
+- [`loop-iterate`](skills/loop-iterate/SKILL.md) — Reviews a finished loop against its contract, fixes the friction it exposed in the environment and tooling, and connects to the next loop's discussion.
+- [`loop-teach`](skills/loop-teach/SKILL.md) — Teaches along motive, intuition, and abstraction, one layer per turn, so the human can carry it elsewhere instead of receiving one large dump.
 - [`refactor-ui`](skills/refactor-ui/SKILL.md) — Improves an existing UI or visual artifact from concrete feedback: diagnose the complaint, read design guidance on demand, make a bounded revision, and verify the original problem improved.
 - [`review-with-me`](skills/review-with-me/SKILL.md) — Curates load-bearing code into focused slices for collaborative human review.
 

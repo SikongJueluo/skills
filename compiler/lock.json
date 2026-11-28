@@ -81,6 +81,33 @@
         }
       }
     },
+    "loop-discuss": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "8e53b2e142e8cc7499439aed65b42eaa45f0748b6ea6021f4b73af2ebf52c27d",
+          "source_sha256": "f17eacdd2bf787e15549b17674424cc4d8b228db44da95650229e09f3b8a7de5"
+        }
+      }
+    },
+    "loop-iterate": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "88aff0d9181e1e7589f9890cf83b2c17b358892f305ca632f744fd39617d088e",
+          "source_sha256": "809fc0243f9c0ba46fbc265b76c81a3a94681664d5d474ce9d255cc19c962acc"
+        }
+      }
+    },
+    "loop-teach": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "eda78c18cc3728b810501dcf760782a93947ac84a74a413de0c4f9a5810d6299",
+          "source_sha256": "334af40bf97903fb2645ea686b394b38f85e23da7f90f847c3b615678768e5f5"
+        }
+      }
+    },
     "refactor-ui": {
       "generator": "deepseek-v4.1-flash baseline; gpt-6.2-sol revised root Skill and surface reference",
       "translations": {
