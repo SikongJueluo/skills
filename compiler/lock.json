@@ -1,0 +1,120 @@
+{
+  "skills": {
+    "arch-code-review": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "4e8351be6e9180f1c49cd68f49e57286b5e8a32aad279c2f2ed915d33bfefb56",
+          "source_sha256": "9081280ac94d32f2c9b427520d258e12abc7370020a0cfb885d520704b3c3031"
+        }
+      }
+    },
+    "code-craft": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "e44058cf25707c9ea2f0abafa4087807e3cc9525c32d06577318db114a789814",
+          "source_sha256": "deab06f667715529559a6dcf80165ca36e9eb62b54a18f8e75f55085caf24862"
+        },
+        "references/standards.md": {
+          "output_sha256": "2a15ec3594c8591f972d2f7c6bee9b4edaaa129820e4f1bedca50a596ca95aa6",
+          "source_sha256": "f5e6529559d4b77f5128b73943e4d031528c9bed92beeaea64ec9b380197ba92"
+        }
+      }
+    },
+    "code-craft-review": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "e69b39ea440016b0dfe244c3703f4e0d083ea4238426d9c7c6e67a531e661f98",
+          "source_sha256": "93496ac51eadedfa3b735590546508ee58176c825a8b67cbacfc247df11bbbbc"
+        }
+      }
+    },
+    "frontend-slides": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "1b90ec1c9befb63c78af99bd859ca98c81af53b91cca286cc7f6095011771697",
+          "source_sha256": "8537cc5d00d3c49574381267cced3a2a2cb0fc6a28e2e51d80ed6802771751f5"
+        },
+        "bold-template-pack/README.md": {
+          "output_sha256": "d2c84f10709acc470fc23cc0db895f2f4d66b261835f1d89460a0f2e67237129",
+          "source_sha256": "784204f2bcc4d8d72929a33b143af86b3dc206fc6692277f1b4664bb01297bd3"
+        },
+        "html-template.md": {
+          "output_sha256": "86414c126db1c5a7157cc87a86ffb6bae42343a5b99b13f240e2df83e13a58f1",
+          "source_sha256": "339ca9c508d288ff3fb3bb45894dfc6388f8ad91faad838afc759e90d7c87e79"
+        },
+        "references/deploy.md": {
+          "output_sha256": "7ce9c7e522aaca693bb497a940c3ca2f9faebe5cdcd9f236b6f1e9a95f94d27b",
+          "source_sha256": "26e5b885d9f3f357fce955bbaba8809006d4973580f5372262218534961ddf61"
+        },
+        "references/design-review.md": {
+          "output_sha256": "acc2b3c4048b136d7df306ba4d944a7e6fa58a7cafbd90f85405f5879ff64644",
+          "source_sha256": "12b375a7b977ae8c1c6db1cda92688fe4c73afde7e4c1c04d882605f95d7a9db"
+        },
+        "references/editable-pptx.md": {
+          "output_sha256": "ea7bf9246aa4bf30a15bab4307fd91b9bd2e4296ae6053bcf978ee9d70b9f2c7",
+          "source_sha256": "11771c85945863ba1c126a1df2fef273984ecc8446f978c8526928c738af3058"
+        },
+        "references/pdf.md": {
+          "output_sha256": "55479d8c99bcd9fc104128a75c83e6f7b5b6b83df58f2f3e18975eb62eb52dc5",
+          "source_sha256": "6eff5df31678bd96826a1547abb45a4525990680b1f97d8cb8c5329156361297"
+        },
+        "references/pptx-troubleshooting.md": {
+          "output_sha256": "dfabe3c2d60580b3633c0bf2ae12166ebdde5e6e9309ce0c0fb09e46cf2d79c6",
+          "source_sha256": "c897f2b82fbcdb3ede17a5a24d2ab0a714068d3e328175c5676c3dc24b31500c"
+        },
+        "references/pptx.md": {
+          "output_sha256": "e3b617128a3ef888bbdee65b5451c54992b532ff2081b2c1899e18058ece05d3",
+          "source_sha256": "668ee6103b147bc3d818ae3106aabdc2877e22f2e0483ff3f0260911c4f73814"
+        }
+      }
+    },
+    "jj-describe": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "b17147c765e8edfa65d6a9709547f170d08df3391ae699e34e656130a7cda3fe",
+          "source_sha256": "bb743aebda7fe18dc1f295abec30f757419456c4af219093c1d924b101a89dc4"
+        }
+      }
+    },
+    "refactor-ui": {
+      "generator": "deepseek-v4.1-flash baseline; gpt-6.2-sol revised root Skill and surface reference",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "13e077a23231ef0a5d1c74b7370ab256302c23ed50d058a8e05c322e968d5355",
+          "source_sha256": "9fb3f82eb95859b8a6a0d9255b895482102a532dae2934e4bb58b8d561f7096f"
+        },
+        "references/consistency.md": {
+          "output_sha256": "9aeeab56bc1ce12b4cc2bb1e66466202522c81211bfd752619cfa7c04234bcf4",
+          "source_sha256": "d0b8fc3c5aacd03d5f5614dd932f0252e6d6b28c0dcee9f28ddf6e39d453c1a4"
+        },
+        "references/craft.md": {
+          "output_sha256": "c41089b59ad1399948353d20b2b3c35998370408ceac78d9358463fa4644eb06",
+          "source_sha256": "add89bafeedb37ad3c8cd0b4a3ccdac639260ed1dde3a2535a2c9498d41e4ff3"
+        },
+        "references/emphasis.md": {
+          "output_sha256": "db03af7357a04094ac11050dc0117cc6d4ed64ce35afbd0250e564697b9443da",
+          "source_sha256": "570e91c24b500d2a26a7950955258037e5fcea5c0081921d4614f30b43513cad"
+        },
+        "references/surface.md": {
+          "output_sha256": "c3370fa75046d8dfa31fdbe1f72fa83d051c4d8bf0180d4fa50d6b741e2bc803",
+          "source_sha256": "eb8019ac42e7a95f5c13da7629ab3db4b57e07d5939e887cf97fbcd1495d31e3"
+        }
+      }
+    },
+    "review-with-me": {
+      "generator": "deepseek-v4.1-flash",
+      "translations": {
+        "SKILL.md": {
+          "output_sha256": "b1e11692679135f6ea0d2614d67d27a6859eb6a80eda6743fffc71317c4614cf",
+          "source_sha256": "510d95e2f4b3679e6be0fda72e7a5faf63662e69c276128cc41e24a81dcf47b2"
+        }
+      }
+    }
+  },
+  "version": 1
+}
